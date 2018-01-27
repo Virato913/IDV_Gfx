@@ -4,59 +4,57 @@
 #include <vector>
 #include <string>
 
-void PrintFromLibrary() {
-	printf("Hello World from Static Library\n");
+//void PrintFromLibrary() {
+//	printf("Hello World from Static Library\n");
+//}
+
+Parser::Parser() {
+	iFound = 0;
+	iVertexCount = 0;
+	bMeshFound = false;
 }
 
-//using namespace std;
-//
-//Parser::Parser() {
-//	iFound = 0;
-//	iVertexCount = 0;
-//	bMeshFound = false;
-//}
-//
-//bool Parser::Load(string fName) {
-//	fstream fFile;
-//	vector<Coordinates*> MeshList;
-//	vector<Coordinates*>::iterator it;
-//	string sIn;
-//
-//	fFile.open(fName + ".X", ios::in, ios::binary);
-//
-//	if (fFile.is_open())
-//	{
-//		while (!bMeshFound)
-//		{
-//			getline(fFile, sIn);
-//			iFound = sIn.find(" Mesh ");
-//			if (iFound == 0)
-//			{
-//				fFile >> iVertexCount;
-//				fFile >> cChar;
-//				bMeshFound = true;
-//			}
-//		}
-//		if (bMeshFound)
-//		{
-//			for (int i = 0; i < iVertexCount; i++)
-//			{
-//				Coordinates* pivot = new Coordinates;
-//				fFile >> pivot->x;
-//				fFile >> cChar;
-//				fFile >> pivot->y;
-//				fFile >> cChar;
-//				fFile >> pivot->z;
-//				fFile >> cChar;
-//				fFile >> cChar;
-//				MeshList.push_back(pivot);
-//			}
-//			fFile.close();
-//			return true;
-//		}
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
+bool Parser::Load(std::string fName, std::vector<Coordinates*>& coords) {
+	std::fstream fFile;
+	/*std::vector<Coordinates*> MeshList;
+	std::vector<Coordinates*>::iterator it;*/
+	std::string sIn;
+
+	fFile.open(fName + ".X", std::ios::in, std::ios::binary);
+
+	if (fFile.is_open())
+	{
+		while (!bMeshFound)
+		{
+			getline(fFile, sIn);
+			iFound = sIn.find(" Mesh ");
+			if (iFound == 0)
+			{
+				fFile >> iVertexCount;
+				fFile >> cChar;
+				bMeshFound = true;
+			}
+		}
+		if (bMeshFound)
+		{
+			for (int i = 0; i < iVertexCount; i++)
+			{
+				Coordinates* pivot = new Coordinates;
+				fFile >> pivot->x;
+				fFile >> cChar;
+				fFile >> pivot->y;
+				fFile >> cChar;
+				fFile >> pivot->z;
+				fFile >> cChar;
+				fFile >> cChar;
+				coords.push_back(pivot);
+			}
+		}
+		fFile.close();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

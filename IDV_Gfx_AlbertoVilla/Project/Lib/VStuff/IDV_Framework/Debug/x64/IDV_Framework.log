@@ -1,2 +1,2 @@
 ﻿  IDVWin32Manager.cpp
-  IDV_Framework.vcxproj -> C:\Users\Alumnos UAD\Desktop\Weas de Graficas\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Lib\Debug\x64\IDV_Framework.lib
+c:\users\casa\documents\beto\weas de gráficas\nueva carpeta\idv_gfx\idv_gfx_albertovilla\project\idv_framework\src\idvwindow\win32\idvwin32manager.cpp : fatal error C1041: cannot open program database 'C:\Users\Casa\Documents\Beto\Weas de Gráficas\Nueva carpeta\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Lib\VStuff\IDV_Framework\Debug\x64\IDV_Framework.idb'; if multiple CL.EXE write to the same .PDB file, please use /FS
