@@ -386,6 +386,7 @@ XMATRIX44& XMATRIX44::operator *= (float times){
 	this->m42 *= times;
 	this->m43 *= times;
 	this->m44 *= times;
+	return *this;
 }
 XMATRIX44& XMATRIX44::operator /= (float times){
 	this->m11 /= times;
@@ -407,6 +408,7 @@ XMATRIX44& XMATRIX44::operator /= (float times){
 	this->m42 /= times;
 	this->m43 /= times;
 	this->m44 /= times;
+	return *this;
 }
 
 XMATRIX44 XMATRIX44::operator + () const{
@@ -419,12 +421,12 @@ XMATRIX44 XMATRIX44::operator - () const{
 					 -this->m41, -this->m42, -this->m43, -this->m44);
 }
 
-XMATRIX44::operator float*(){
-
-}
-XMATRIX44::operator const float* () const{
-
-}
+//XMATRIX44::operator float*(){
+//
+//}
+//XMATRIX44::operator const float* () const{
+//
+//}
 
 XMATRIX44 XMATRIX44::operator * (const XMATRIX44& other) const{
 	return XMATRIX44((this->m11*other.m11) + (this->m12*other.m21) + (this->m13*other.m31) + (this->m14*other.m41),
