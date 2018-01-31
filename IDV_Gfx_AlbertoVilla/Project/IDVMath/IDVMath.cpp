@@ -278,7 +278,7 @@ XVECTOR3 XVECTOR3::operator / (float times) const{
 }
 
 XVECTOR3 XVECTOR3::operator * (const XVECTOR3& other){
-
+	return other;
 }
 
 //friend XVECTOR3 XVECTOR3::operator * (float, const struct XVECTOR3&){
@@ -297,4 +297,186 @@ void XVECTOR3::Normalize(){
 }
 float XVECTOR3::Length(){
 	return (sqrt(pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2)));
+}
+
+XMATRIX44& XMATRIX44::operator *= (const XMATRIX44& other){
+	XMATRIX44 pivot = *this;
+	this->m11 = (pivot.m11*other.m11) + (pivot.m12*other.m21) + (pivot.m13*other.m31) + (pivot.m14*other.m41);
+	this->m12 = (pivot.m11*other.m12) + (pivot.m12*other.m22) + (pivot.m13*other.m32) + (pivot.m14*other.m42);
+	this->m13 = (pivot.m11*other.m13) + (pivot.m12*other.m23) + (pivot.m13*other.m33) + (pivot.m14*other.m43);
+	this->m14 = (pivot.m11*other.m14) + (pivot.m12*other.m24) + (pivot.m13*other.m34) + (pivot.m14*other.m44);
+
+	this->m21 = (pivot.m21*other.m11) + (pivot.m22*other.m21) + (pivot.m23*other.m31) + (pivot.m24*other.m41);
+	this->m22 = (pivot.m21*other.m12) + (pivot.m22*other.m22) + (pivot.m23*other.m32) + (pivot.m24*other.m42);
+	this->m23 = (pivot.m21*other.m13) + (pivot.m22*other.m23) + (pivot.m23*other.m33) + (pivot.m24*other.m43);
+	this->m24 = (pivot.m21*other.m14) + (pivot.m22*other.m24) + (pivot.m23*other.m34) + (pivot.m24*other.m44);
+
+	this->m31 = (pivot.m31*other.m11) + (pivot.m32*other.m21) + (pivot.m33*other.m31) + (pivot.m34*other.m41);
+	this->m32 = (pivot.m31*other.m12) + (pivot.m32*other.m22) + (pivot.m33*other.m32) + (pivot.m34*other.m42);
+	this->m33 = (pivot.m31*other.m13) + (pivot.m32*other.m23) + (pivot.m33*other.m33) + (pivot.m34*other.m43);
+	this->m34 = (pivot.m31*other.m14) + (pivot.m32*other.m24) + (pivot.m33*other.m34) + (pivot.m34*other.m44);
+
+	this->m41 = (pivot.m41*other.m11) + (pivot.m42*other.m21) + (pivot.m43*other.m31) + (pivot.m44*other.m41);
+	this->m42 = (pivot.m41*other.m12) + (pivot.m42*other.m22) + (pivot.m43*other.m32) + (pivot.m44*other.m42);
+	this->m43 = (pivot.m41*other.m13) + (pivot.m42*other.m23) + (pivot.m43*other.m33) + (pivot.m44*other.m43);
+	this->m44 = (pivot.m41*other.m14) + (pivot.m42*other.m24) + (pivot.m43*other.m34) + (pivot.m44*other.m44);
+	return *this;
+}
+XMATRIX44& XMATRIX44::operator += (const XMATRIX44& other) {
+	this->m11 += other.m11;
+	this->m12 += other.m12;
+	this->m13 += other.m13;
+	this->m14 += other.m14;
+			  
+	this->m21 += other.m21;
+	this->m22 += other.m22;
+	this->m23 += other.m23;
+	this->m24 += other.m24;
+			  
+	this->m31 += other.m31;
+	this->m32 += other.m32;
+	this->m33 += other.m33;
+	this->m34 += other.m34;
+			  
+	this->m41 += other.m41;
+	this->m42 += other.m42;
+	this->m43 += other.m43;
+	this->m44 += other.m44;
+	return *this;
+}
+XMATRIX44& XMATRIX44::operator -= (const XMATRIX44& other){
+	this->m11 -= other.m11;
+	this->m12 -= other.m12;
+	this->m13 -= other.m13;
+	this->m14 -= other.m14;
+			  
+	this->m21 -= other.m21;
+	this->m22 -= other.m22;
+	this->m23 -= other.m23;
+	this->m24 -= other.m24;
+			  
+	this->m31 -= other.m31;
+	this->m32 -= other.m32;
+	this->m33 -= other.m33;
+	this->m34 -= other.m34;
+			  
+	this->m41 -= other.m41;
+	this->m42 -= other.m42;
+	this->m43 -= other.m43;
+	this->m44 -= other.m44;
+	return *this;
+}
+XMATRIX44& XMATRIX44::operator *= (float times){
+	this->m11 *= times;
+	this->m12 *= times;
+	this->m13 *= times;
+	this->m14 *= times;
+			  	 
+	this->m21 *= times;
+	this->m22 *= times;
+	this->m23 *= times;
+	this->m24 *= times;
+			  	 
+	this->m31 *= times;
+	this->m32 *= times;
+	this->m33 *= times;
+	this->m34 *= times;
+			  	 
+	this->m41 *= times;
+	this->m42 *= times;
+	this->m43 *= times;
+	this->m44 *= times;
+}
+XMATRIX44& XMATRIX44::operator /= (float times){
+	this->m11 /= times;
+	this->m12 /= times;
+	this->m13 /= times;
+	this->m14 /= times;
+
+	this->m21 /= times;
+	this->m22 /= times;
+	this->m23 /= times;
+	this->m24 /= times;
+
+	this->m31 /= times;
+	this->m32 /= times;
+	this->m33 /= times;
+	this->m34 /= times;
+
+	this->m41 /= times;
+	this->m42 /= times;
+	this->m43 /= times;
+	this->m44 /= times;
+}
+
+XMATRIX44 XMATRIX44::operator + () const{
+	return *this;
+}
+XMATRIX44 XMATRIX44::operator - () const{
+	return XMATRIX44(-this->m11, -this->m12, -this->m13, -this->m14,
+					 -this->m21, -this->m22, -this->m23, -this->m24,
+					 -this->m31, -this->m32, -this->m33, -this->m34,
+					 -this->m41, -this->m42, -this->m43, -this->m44);
+}
+
+XMATRIX44::operator float*(){
+
+}
+XMATRIX44::operator const float* () const{
+
+}
+
+XMATRIX44 XMATRIX44::operator * (const XMATRIX44& other) const{
+	return XMATRIX44((this->m11*other.m11) + (this->m12*other.m21) + (this->m13*other.m31) + (this->m14*other.m41),
+	(this->m11*other.m12) + (this->m12*other.m22) + (this->m13*other.m32) + (this->m14*other.m42),
+	(this->m11*other.m13) + (this->m12*other.m23) + (this->m13*other.m33) + (this->m14*other.m43),
+	(this->m11*other.m14) + (this->m12*other.m24) + (this->m13*other.m34) + (this->m14*other.m44),
+	(this->m21*other.m11) + (this->m22*other.m21) + (this->m23*other.m31) + (this->m24*other.m41),
+	(this->m21*other.m12) + (this->m22*other.m22) + (this->m23*other.m32) + (this->m24*other.m42),
+	(this->m21*other.m13) + (this->m22*other.m23) + (this->m23*other.m33) + (this->m24*other.m43),
+	(this->m21*other.m14) + (this->m22*other.m24) + (this->m23*other.m34) + (this->m24*other.m44),
+	(this->m31*other.m11) + (this->m32*other.m21) + (this->m33*other.m31) + (this->m34*other.m41),
+	(this->m31*other.m12) + (this->m32*other.m22) + (this->m33*other.m32) + (this->m34*other.m42),
+	(this->m31*other.m13) + (this->m32*other.m23) + (this->m33*other.m33) + (this->m34*other.m43),
+	(this->m31*other.m14) + (this->m32*other.m24) + (this->m33*other.m34) + (this->m34*other.m44),
+	(this->m41*other.m11) + (this->m42*other.m21) + (this->m43*other.m31) + (this->m44*other.m41),
+	(this->m41*other.m12) + (this->m42*other.m22) + (this->m43*other.m32) + (this->m44*other.m42),
+	(this->m41*other.m13) + (this->m42*other.m23) + (this->m43*other.m33) + (this->m44*other.m43),
+	(this->m41*other.m14) + (this->m42*other.m24) + (this->m43*other.m34) + (this->m44*other.m44));
+}
+XMATRIX44 XMATRIX44::operator + (const XMATRIX44& other) const{
+	return XMATRIX44(this->m11 + other.m11, this->m12 + other.m12, this->m13 + other.m13, this->m14 + other.m14,
+					 this->m21 + other.m21, this->m22 + other.m22, this->m23 + other.m23, this->m24 + other.m24,
+					 this->m31 + other.m31, this->m32 + other.m32, this->m33 + other.m33, this->m34 + other.m34,
+					 this->m41 + other.m41, this->m42 + other.m42, this->m43 + other.m43, this->m44 + other.m44);
+}
+XMATRIX44 XMATRIX44::operator - (const XMATRIX44& other) const{
+	return XMATRIX44(this->m11 + other.m11, this->m12 + other.m12, this->m13 + other.m13, this->m14 + other.m14,
+					 this->m21 + other.m21, this->m22 + other.m22, this->m23 + other.m23, this->m24 + other.m24,
+					 this->m31 + other.m31, this->m32 + other.m32, this->m33 + other.m33, this->m34 + other.m34,
+					 this->m41 + other.m41, this->m42 + other.m42, this->m43 + other.m43, this->m44 + other.m44);
+}
+XMATRIX44 XMATRIX44::operator * (float times) const{
+	return XMATRIX44(this->m11 * times, this->m12 * times, this->m13 * times, this->m14 * times,
+					 this->m21 * times, this->m22 * times, this->m23 * times, this->m24 * times,
+					 this->m31 * times, this->m32 * times, this->m33 * times, this->m34 * times,
+					 this->m41 * times, this->m42 * times, this->m43 * times, this->m44 * times);
+}
+XMATRIX44 XMATRIX44::operator / (float times) const{
+	return XMATRIX44(this->m11 / times, this->m12 / times, this->m13 / times, this->m14 / times,
+					 this->m21 / times, this->m22 / times, this->m23 / times, this->m24 / times,
+					 this->m31 / times, this->m32 / times, this->m33 / times, this->m34 / times,
+					 this->m41 / times, this->m42 / times, this->m43 / times, this->m44 / times);
+}
+
+//friend XMATRIX44 XMATRIX44::operator * (float, const XMATRIX44&){}
+
+bool XMATRIX44::operator == (const XMATRIX44& other) const {
+	return ((this->m11 == other.m11) && (this->m12 == other.m12) && (this->m13 == other.m13) && (this->m14 == other.m14) &&
+			(this->m21 == other.m21) && (this->m22 == other.m22) && (this->m23 == other.m23) && (this->m24 == other.m24) &&
+			(this->m31 == other.m31) && (this->m32 == other.m32) && (this->m33 == other.m33) && (this->m34 == other.m34) &&
+			(this->m41 == other.m41) && (this->m42 == other.m42) && (this->m43 == other.m43) && (this->m44 == other.m44));
+}
+bool XMATRIX44::operator != (const XMATRIX44& other) const{
+	return (!(*this == other));
 }
