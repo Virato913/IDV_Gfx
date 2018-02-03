@@ -116,7 +116,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\$(Configuration)\$(Platform);$(SolutionDir)ThirdParty\SDL-1.2.14\lib;$(SolutionDir)ThirdParty\OGLES2\pvr\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>IDV_Framework.lib;IDV_Parser.lib;SDL.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>IDV_Framework.lib;IDV_Parser.lib;IDVMath.lib;SDL.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
