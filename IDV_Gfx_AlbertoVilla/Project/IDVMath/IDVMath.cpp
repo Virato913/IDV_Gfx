@@ -1,15 +1,22 @@
 #include "IDVMath.h"
 
+void XMatMultiply(XMATRIX44 &mpout, const XMATRIX44 &A, const XMATRIX44 &B)
+{
+	mpout = A*B;
+}
 void XMatTranslation(XMATRIX44 &mpout, const float &x, const float &y, const float &z){
 	mpout.m11 += x;
 	mpout.m21 += y;
 	mpout.m31 += z;
+
 	mpout.m12 += x;
 	mpout.m22 += y;
 	mpout.m32 += z;
+
 	mpout.m13 += x;
 	mpout.m23 += y;
 	mpout.m33 += z;
+
 	mpout.m14 += x;
 	mpout.m24 += y;
 	mpout.m34 += z;
@@ -18,12 +25,15 @@ void XMatTranslation(XMATRIX44 &mpout, XVECTOR3 &translation){
 	mpout.m11 += translation.x;
 	mpout.m21 += translation.y;
 	mpout.m31 += translation.z;
+
 	mpout.m12 += translation.x;
 	mpout.m22 += translation.y;
 	mpout.m32 += translation.z;
+
 	mpout.m13 += translation.x;
 	mpout.m23 += translation.y;
 	mpout.m33 += translation.z;
+
 	mpout.m14 += translation.x;
 	mpout.m24 += translation.y;
 	mpout.m34 += translation.z;
@@ -32,217 +42,335 @@ void XMatScaling(XMATRIX44 &mpout, const float &x, const float &y, const float &
 	mpout.m11 *= x;
 	mpout.m21 *= y;
 	mpout.m31 *= z;
+
 	mpout.m12 *= x;
 	mpout.m22 *= y;
 	mpout.m32 *= z;
+
 	mpout.m13 *= x;
 	mpout.m23 *= y;
 	mpout.m33 *= z;
+
 	mpout.m14 *= x;
 	mpout.m24 *= y;
 	mpout.m34 *= z;
 }
 void XMatRotationXLH(XMATRIX44 &mpout, const float &x){
+	XMATRIX44 pivot = mpout;
+	mpout.m21 = pivot.m21*cos(x) + pivot.m31*sin(x);
+	mpout.m31 = -pivot.m21*sin(x) + pivot.m31*cos(x);
+
+	mpout.m22 = pivot.m22*cos(x) + pivot.m32*sin(x);
+	mpout.m32 = -pivot.m22*sin(x) + pivot.m32*cos(x);
+
+	mpout.m23 = pivot.m23*cos(x) + pivot.m33*sin(x);
+	mpout.m33 = -pivot.m23*sin(x) + pivot.m33*cos(x);
+
+	mpout.m24 = pivot.m24*cos(x) + pivot.m34*sin(x);
+	mpout.m34 = -pivot.m24*sin(x) + pivot.m34*cos(x);
 
 }
 void XMatRotationXRH(XMATRIX44 &mpout, const float &x){
+	XMATRIX44 pivot = mpout;
+	mpout.m21 = pivot.m21*cos(x) - pivot.m31*sin(x);
+	mpout.m31 = pivot.m21*sin(x) + pivot.m31*cos(x);
 
+	mpout.m22 = pivot.m22*cos(x) - pivot.m32*sin(x);
+	mpout.m32 = pivot.m22*sin(x) + pivot.m32*cos(x);
+
+	mpout.m23 = pivot.m23*cos(x) - pivot.m33*sin(x);
+	mpout.m33 = pivot.m23*sin(x) + pivot.m33*cos(x);
+
+	mpout.m24 = pivot.m24*cos(x) - pivot.m34*sin(x);
+	mpout.m34 = pivot.m24*sin(x) + pivot.m34*cos(x);
 }
 void XMatRotationYLH(XMATRIX44 &mpout, const float &y){
+	XMATRIX44 pivot = mpout;
+	mpout.m11 = pivot.m11*cos(y) - pivot.m31*sin(y);
+	mpout.m31 = pivot.m11*sin(y) + pivot.m31*cos(y);
 
+	mpout.m12 = pivot.m12*cos(y) - pivot.m32*sin(y);
+	mpout.m32 = pivot.m12*sin(y) + pivot.m32*cos(y);
+
+	mpout.m13 = pivot.m13*cos(y) - pivot.m33*sin(y);
+	mpout.m33 = pivot.m13*sin(y) + pivot.m33*cos(y);
+
+	mpout.m14 = pivot.m14*cos(y) - pivot.m34*sin(y);
+	mpout.m34 = pivot.m14*sin(y) + pivot.m34*cos(y);
 }
 void XMatRotationYRH(XMATRIX44 &mpout, const float &y){
+	XMATRIX44 pivot = mpout;
+	mpout.m11 = pivot.m11*cos(y) + pivot.m31*sin(y);
+	mpout.m31 = -pivot.m11*sin(y) + pivot.m31*cos(y);
 
+	mpout.m12 = pivot.m12*cos(y) + pivot.m32*sin(y);
+	mpout.m32 = -pivot.m12*sin(y) + pivot.m32*cos(y);
+
+	mpout.m13 = pivot.m13*cos(y) + pivot.m33*sin(y);
+	mpout.m33 = -pivot.m13*sin(y) + pivot.m33*cos(y);
+
+	mpout.m14 = pivot.m14*cos(y) + pivot.m34*sin(y);
+	mpout.m34 = -pivot.m14*sin(y) + pivot.m34*cos(y);
 }
 void XMatRotationZLH(XMATRIX44 &mpout, const float &z){
+	XMATRIX44 pivot = mpout;
+	mpout.m11 = pivot.m11*cos(z) + pivot.m21*sin(z);
+	mpout.m21 = -pivot.m11*sin(z) + pivot.m21*cos(z);
 
+	mpout.m12 = pivot.m12*cos(z) + pivot.m22*sin(z);
+	mpout.m22 = -pivot.m12*sin(z) + pivot.m22*cos(z);
+
+	mpout.m13 = pivot.m13*cos(z) + pivot.m23*sin(z);
+	mpout.m23 = -pivot.m13*sin(z) + pivot.m23*cos(z);
+
+	mpout.m14 = pivot.m14*cos(z) + pivot.m24*sin(z);
+	mpout.m24 = -pivot.m14*sin(z) + pivot.m24*cos(z);
 }
 void XMatRotationZRH(XMATRIX44 &mpout, const float &z){
+	XMATRIX44 pivot = mpout;
+	mpout.m11 = pivot.m11*cos(z) - pivot.m21*sin(z);
+	mpout.m21 = pivot.m11*sin(z) + pivot.m21*cos(z);
+
+	mpout.m12 = pivot.m12*cos(z) - pivot.m22*sin(z);
+	mpout.m22 = pivot.m12*sin(z) + pivot.m22*cos(z);
+
+	mpout.m13 = pivot.m13*cos(z) - pivot.m23*sin(z);
+	mpout.m23 = pivot.m13*sin(z) + pivot.m23*cos(z);
+
+	mpout.m14 = pivot.m14*cos(z) - pivot.m24*sin(z);
+	mpout.m24 = pivot.m14*sin(z) + pivot.m24*cos(z);
+}
+void XMatTranspose(XMATRIX44 &mpout, XMATRIX44 A) {
+	mpout = A;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			mpout.m[j][i] = A.m[i][j];
+		}
+	}
+}
+void XMatIdentity(XMATRIX44 &mpout) {
+	mpout *= 0;
+	mpout.m11 = 1;
+	mpout.m22 = 1;
+	mpout.m33 = 1;
+	mpout.m44 = 1;
+}
+
+void XMatViewLookAtLH(XMATRIX44 &mpout, const XVECTOR3 &camPos, const XVECTOR3 &lookAt, const XVECTOR3 &upAxis) {
+	XVECTOR3 zaxe = lookAt - camPos;
+	zaxe.Normalize();
+
+	XVECTOR3 xaxe;
+	XVecCross(xaxe, upAxis, zaxe);
+	xaxe.Normalize();
+
+	XVECTOR3 yaxe;
+	XVecCross(yaxe, zaxe, xaxe);
+
+	mpout.m[0][0] = xaxe.x;
+	mpout.m[0][1] = yaxe.x;
+	mpout.m[0][2] = zaxe.x;
+	XVecDot(mpout.m[3][0], xaxe, camPos);
+	mpout.m[3][0] = -mpout.m[3][0];
+
+	mpout.m[1][0] = xaxe.y;
+	mpout.m[1][1] = yaxe.y;
+	mpout.m[1][2] = zaxe.y;
+	XVecDot(mpout.m[3][1], yaxe, camPos);
+	mpout.m[3][1] = -mpout.m[3][1];
+
+	mpout.m[2][0] = xaxe.z;
+	mpout.m[2][1] = yaxe.z;
+	mpout.m[2][2] = zaxe.z;
+	XVecDot(mpout.m[3][2], zaxe, camPos);
+	mpout.m[3][2] = -mpout.m[3][2];
+
+	mpout.m[0][3] = 0.0f;
+	mpout.m[1][3] = 0.0f;
+	mpout.m[2][3] = 0.0f;
+	mpout.m[3][3] = 1.0f;
+}
+
+void XMatViewLookAtRH(XMATRIX44 &mpout, const XVECTOR3 &camPos, const XVECTOR3 &lookAt, const XVECTOR3 &upAxis) {
+	XVECTOR3 zaxe = camPos - lookAt;
+	zaxe.Normalize();
+
+	XVECTOR3 xaxe;
+	XVecCross(xaxe, upAxis, zaxe);
+	xaxe.Normalize();
+
+	XVECTOR3 yaxe;
+	XVecCross(yaxe, zaxe, xaxe);
+
+	mpout.m[0][0] = xaxe.x;
+	mpout.m[0][1] = yaxe.x;
+	mpout.m[0][2] = zaxe.x;
+	XVecDot(mpout.m[3][0], xaxe, camPos);
+	mpout.m[3][0] = -mpout.m[3][0];
+
+	mpout.m[1][0] = xaxe.y;
+	mpout.m[1][1] = yaxe.y;
+	mpout.m[1][2] = zaxe.y;
+	XVecDot(mpout.m[3][1], yaxe, camPos);
+	mpout.m[3][1] = -mpout.m[3][1];
+
+	mpout.m[2][0] = xaxe.z;
+	mpout.m[2][1] = yaxe.z;
+	mpout.m[2][2] = zaxe.z;
+	XVecDot(mpout.m[3][2], zaxe, camPos);
+	mpout.m[3][2] = -mpout.m[3][2];
+
+	mpout.m[0][3] = 0.0f;
+	mpout.m[1][3] = 0.0f;
+	mpout.m[2][3] = 0.0f;
+	mpout.m[3][3] = 1.0f;
+}
+
+void XMatPerspectiveLH(XMATRIX44 &mpout, const float &FOV, const float &Aspect, const float &NearPlane, const float &FarPlane) {
+	float x, y;
+	float ang = FOV / 2.0f;
+
+	y = cos(ang) / sin(ang);
+	x = y / Aspect;
+
+	mpout.m[0][0] = x;
+	mpout.m[1][1] = y;
+	mpout.m[2][2] = FarPlane / (FarPlane - NearPlane);
+	mpout.m[2][3] = 1.0;
+	mpout.m[3][2] = -(NearPlane*FarPlane) / (FarPlane - NearPlane);
+	mpout.m[3][3] = 0.0f;
 
 }
-void XMatTranspose(XMATRIX44 &, XMATRIX44) {
+
+void XMatPerspectiveRH(XMATRIX44 &mpout, const float &FOV, const float &Aspect, const float &NearPlane, const float &FarPlane)
+{
+	float x, y;
+	float ang = FOV / 2.0f;
+
+	y = cos(ang) / sin(ang);
+	x = y / Aspect;
+
+	mpout.m[0][0] = x;
+	mpout.m[1][1] = y;
+	mpout.m[2][2] = FarPlane / (NearPlane - FarPlane);
+	mpout.m[2][3] = -1.0;
+	mpout.m[3][2] = (NearPlane*FarPlane) / (NearPlane - FarPlane);
+	mpout.m[3][3] = 0.0f;
+}
+
+void XMatOrthoLH(XMATRIX44 &m, const float &w, const float &h, const float &zn, const float &zf) {
+	m.m[0][0] = 2.0f / w;
+	m.m[1][1] = 2.0f / h;
+	m.m[2][2] = 1.0f / (zf - zn);
+	m.m[3][2] = -zn / (zf - zn);
+	m.m[3][3] = 1.0f;
+}
+
+void XMatOrthoRH(XMATRIX44 &m, const float &w, const float &h, const float &zn, const float &zf) {
+	m.m[0][0] = 2.0f / w;
+	m.m[1][1] = 2.0f / h;
+	m.m[2][2] = 1.0f / (zn - zf);
+	m.m[3][2] = zn / (zn - zf);
+	m.m[3][3] = 1.0f;
+}
+
+void XMATRIX44::Inverse(XMATRIX44 *o) {
+#if DOUBLE_FOR_INVERSE
+	XMATRIX44_64 tmp64 = XMATRIX44_64(this);
+	double det =
+#else
+	XMATRIX44 tmp64 = *this;
+	float det =
+#endif
+		tmp64.m11*tmp64.m22*tmp64.m33*tmp64.m44 + tmp64.m11*tmp64.m23*tmp64.m34*tmp64.m42 + tmp64.m11*tmp64.m24*tmp64.m32*tmp64.m43
+		+ tmp64.m12*tmp64.m21*tmp64.m34*tmp64.m43 + tmp64.m12*tmp64.m23*tmp64.m31*tmp64.m44 + tmp64.m12*tmp64.m24*tmp64.m33*tmp64.m41
+		+ tmp64.m13*tmp64.m21*tmp64.m32*tmp64.m44 + tmp64.m13*tmp64.m22*tmp64.m34*tmp64.m41 + tmp64.m13*tmp64.m24*tmp64.m31*tmp64.m42
+		+ tmp64.m14*tmp64.m21*tmp64.m33*tmp64.m42 + tmp64.m14*tmp64.m22*tmp64.m31*tmp64.m43 + tmp64.m14*tmp64.m23*tmp64.m32*tmp64.m41
+		- tmp64.m11*tmp64.m22*tmp64.m34*tmp64.m43 - tmp64.m11*tmp64.m23*tmp64.m32*tmp64.m44 - tmp64.m11*tmp64.m24*tmp64.m33*tmp64.m42
+		- tmp64.m12*tmp64.m21*tmp64.m33*tmp64.m44 - tmp64.m12*tmp64.m23*tmp64.m34*tmp64.m41 - tmp64.m12*tmp64.m24*tmp64.m31*tmp64.m43
+		- tmp64.m13*tmp64.m21*tmp64.m34*tmp64.m42 - tmp64.m13*tmp64.m22*tmp64.m31*tmp64.m44 - tmp64.m13*tmp64.m24*tmp64.m32*tmp64.m41
+		- tmp64.m14*tmp64.m21*tmp64.m32*tmp64.m43 - tmp64.m14*tmp64.m22*tmp64.m33*tmp64.m41 - tmp64.m14*tmp64.m23*tmp64.m31*tmp64.m42;
+#if DOUBLE_FOR_INVERSE
+	if (det == 0.0) {
+#else
+	if (det == 0.0f) {
+#endif
+		printf("\n\nThe Universe stopped, no det for Matrix, all ends here.\n\n");
+		exit(666);
+	}
+#if DOUBLE_FOR_INVERSE
+	det = 1.0 / det;
+	XMATRIX44_64 out;
+#else
+	det = 1.0f / det;
+	XMATRIX44 out;
+#endif
+
+	out.m11 = tmp64.m22*tmp64.m33*tmp64.m44 + tmp64.m23*tmp64.m34*tmp64.m42 + tmp64.m24*tmp64.m32*tmp64.m43 - tmp64.m22*tmp64.m34*tmp64.m43 - tmp64.m23*tmp64.m32*tmp64.m44 - tmp64.m24*tmp64.m33*tmp64.m42;
+	out.m12 = tmp64.m12*tmp64.m34*tmp64.m43 + tmp64.m13*tmp64.m32*tmp64.m44 + tmp64.m14*tmp64.m33*tmp64.m42 - tmp64.m12*tmp64.m33*tmp64.m44 - tmp64.m13*tmp64.m34*tmp64.m42 - tmp64.m14*tmp64.m32*tmp64.m43;
+	out.m13 = tmp64.m12*tmp64.m23*tmp64.m44 + tmp64.m13*tmp64.m24*tmp64.m42 + tmp64.m14*tmp64.m22*tmp64.m43 - tmp64.m12*tmp64.m24*tmp64.m43 - tmp64.m13*tmp64.m22*tmp64.m44 - tmp64.m14*tmp64.m23*tmp64.m42;
+	out.m14 = tmp64.m12*tmp64.m24*tmp64.m33 + tmp64.m13*tmp64.m22*tmp64.m34 + tmp64.m14*tmp64.m23*tmp64.m32 - tmp64.m12*tmp64.m23*tmp64.m34 - tmp64.m13*tmp64.m24*tmp64.m32 - tmp64.m14*tmp64.m22*tmp64.m33;
+	out.m21 = tmp64.m21*tmp64.m34*tmp64.m43 + tmp64.m23*tmp64.m31*tmp64.m44 + tmp64.m24*tmp64.m33*tmp64.m41 - tmp64.m21*tmp64.m33*tmp64.m44 - tmp64.m23*tmp64.m34*tmp64.m41 - tmp64.m24*tmp64.m31*tmp64.m43;
+	out.m22 = tmp64.m11*tmp64.m33*tmp64.m44 + tmp64.m13*tmp64.m34*tmp64.m41 + tmp64.m14*tmp64.m31*tmp64.m43 - tmp64.m11*tmp64.m34*tmp64.m43 - tmp64.m13*tmp64.m31*tmp64.m44 - tmp64.m14*tmp64.m33*tmp64.m41;
+	out.m23 = tmp64.m11*tmp64.m24*tmp64.m43 + tmp64.m13*tmp64.m21*tmp64.m44 + tmp64.m14*tmp64.m23*tmp64.m41 - tmp64.m11*tmp64.m23*tmp64.m44 - tmp64.m13*tmp64.m24*tmp64.m41 - tmp64.m14*tmp64.m21*tmp64.m43;
+	out.m24 = tmp64.m11*tmp64.m23*tmp64.m34 + tmp64.m13*tmp64.m24*tmp64.m31 + tmp64.m14*tmp64.m21*tmp64.m33 - tmp64.m11*tmp64.m24*tmp64.m33 - tmp64.m13*tmp64.m21*tmp64.m34 - tmp64.m14*tmp64.m23*tmp64.m31;
+	out.m31 = tmp64.m21*tmp64.m32*tmp64.m44 + tmp64.m22*tmp64.m34*tmp64.m41 + tmp64.m24*tmp64.m31*tmp64.m42 - tmp64.m21*tmp64.m34*tmp64.m42 - tmp64.m22*tmp64.m31*tmp64.m44 - tmp64.m24*tmp64.m32*tmp64.m41;
+	out.m32 = tmp64.m11*tmp64.m34*tmp64.m42 + tmp64.m12*tmp64.m31*tmp64.m44 + tmp64.m14*tmp64.m32*tmp64.m41 - tmp64.m11*tmp64.m32*tmp64.m44 - tmp64.m12*tmp64.m34*tmp64.m41 - tmp64.m14*tmp64.m31*tmp64.m42;
+	out.m33 = tmp64.m11*tmp64.m22*tmp64.m44 + tmp64.m12*tmp64.m24*tmp64.m41 + tmp64.m14*tmp64.m21*tmp64.m42 - tmp64.m11*tmp64.m24*tmp64.m42 - tmp64.m12*tmp64.m21*tmp64.m44 - tmp64.m14*tmp64.m22*tmp64.m41;
+	out.m34 = tmp64.m11*tmp64.m24*tmp64.m32 + tmp64.m12*tmp64.m21*tmp64.m34 + tmp64.m14*tmp64.m22*tmp64.m31 - tmp64.m11*tmp64.m22*tmp64.m34 - tmp64.m12*tmp64.m24*tmp64.m31 - tmp64.m14*tmp64.m21*tmp64.m32;
+	out.m41 = tmp64.m21*tmp64.m33*tmp64.m42 + tmp64.m22*tmp64.m31*tmp64.m43 + tmp64.m23*tmp64.m32*tmp64.m41 - tmp64.m21*tmp64.m32*tmp64.m43 - tmp64.m22*tmp64.m33*tmp64.m41 - tmp64.m23*tmp64.m31*tmp64.m42;
+	out.m42 = tmp64.m11*tmp64.m32*tmp64.m43 + tmp64.m12*tmp64.m33*tmp64.m41 + tmp64.m13*tmp64.m31*tmp64.m42 - tmp64.m11*tmp64.m33*tmp64.m42 - tmp64.m12*tmp64.m31*tmp64.m43 - tmp64.m13*tmp64.m32*tmp64.m41;
+	out.m43 = tmp64.m11*tmp64.m23*tmp64.m42 + tmp64.m12*tmp64.m21*tmp64.m43 + tmp64.m13*tmp64.m22*tmp64.m41 - tmp64.m11*tmp64.m22*tmp64.m43 - tmp64.m12*tmp64.m23*tmp64.m41 - tmp64.m13*tmp64.m21*tmp64.m42;
+	out.m44 = tmp64.m11*tmp64.m22*tmp64.m33 + tmp64.m12*tmp64.m23*tmp64.m31 + tmp64.m13*tmp64.m21*tmp64.m32 - tmp64.m11*tmp64.m23*tmp64.m32 - tmp64.m12*tmp64.m21*tmp64.m33 - tmp64.m13*tmp64.m22*tmp64.m31;
+
+	for (int i = 0; i < 16; i++) {
+#if DOUBLE_FOR_INVERSE
+		double val = det*out.mat[i];
+		(*o).mat[i] = static_cast<float>(val);
+#else
+		(*o).mat[i] = det*out.mat[i];
+#endif
+	}
+	}
+
+void XMatRotationAxisRH(XMATRIX44 &mpout, const XVECTOR3 &A, const float &B) {
 
 }
-void XMatIdentity(XMATRIX44 &) {
+void XMatRotationAxisLH(XMATRIX44 &mpout, const XVECTOR3 &A, const float &B) {
 
 }
 
-//void XMatViewLookAtLH(XMATRIX44 &mpout, const XVECTOR3 &camPos, const XVECTOR3 &lookAt, const XVECTOR3 &upAxis) {
-//	XVECTOR3 zaxe = lookAt - camPos;
-//	zaxe.Normalize();
-//
-//	XVECTOR3 xaxe;
-//	XVecCross(xaxe, upAxis, zaxe);
-//	xaxe.Normalize();
-//
-//	XVECTOR3 yaxe;
-//	XVecCross(yaxe, zaxe, xaxe);
-//
-//	mpout.m[0][0] = xaxe.x;
-//	mpout.m[0][1] = yaxe.x;
-//	mpout.m[0][2] = zaxe.x;
-//	XVecDot(mpout.m[3][0], xaxe, camPos);
-//	mpout.m[3][0] = -mpout.m[3][0];
-//
-//	mpout.m[1][0] = xaxe.y;
-//	mpout.m[1][1] = yaxe.y;
-//	mpout.m[1][2] = zaxe.y;
-//	XVecDot(mpout.m[3][1], yaxe, camPos);
-//	mpout.m[3][1] = -mpout.m[3][1];
-//
-//	mpout.m[2][0] = xaxe.z;
-//	mpout.m[2][1] = yaxe.z;
-//	mpout.m[2][2] = zaxe.z;
-//	XVecDot(mpout.m[3][2], zaxe, camPos);
-//	mpout.m[3][2] = -mpout.m[3][2];
-//
-//	mpout.m[0][3] = 0.0f;
-//	mpout.m[1][3] = 0.0f;
-//	mpout.m[2][3] = 0.0f;
-//	mpout.m[3][3] = 1.0f;
-//}
-//
-//void XMatViewLookAtRH(XMATRIX44 &mpout, const XVECTOR3 &camPos, const XVECTOR3 &lookAt, const XVECTOR3 &upAxis) {
-//	XVECTOR3 zaxe = camPos - lookAt;
-//	zaxe.Normalize();
-//
-//	XVECTOR3 xaxe;
-//	XVecCross(xaxe, upAxis, zaxe);
-//	xaxe.Normalize();
-//
-//	XVECTOR3 yaxe;
-//	XVecCross(yaxe, zaxe, xaxe);
-//
-//	mpout.m[0][0] = xaxe.x;
-//	mpout.m[0][1] = yaxe.x;
-//	mpout.m[0][2] = zaxe.x;
-//	XVecDot(mpout.m[3][0], xaxe, camPos);
-//	mpout.m[3][0] = -mpout.m[3][0];
-//
-//	mpout.m[1][0] = xaxe.y;
-//	mpout.m[1][1] = yaxe.y;
-//	mpout.m[1][2] = zaxe.y;
-//	XVecDot(mpout.m[3][1], yaxe, camPos);
-//	mpout.m[3][1] = -mpout.m[3][1];
-//
-//	mpout.m[2][0] = xaxe.z;
-//	mpout.m[2][1] = yaxe.z;
-//	mpout.m[2][2] = zaxe.z;
-//	XVecDot(mpout.m[3][2], zaxe, camPos);
-//	mpout.m[3][2] = -mpout.m[3][2];
-//
-//	mpout.m[0][3] = 0.0f;
-//	mpout.m[1][3] = 0.0f;
-//	mpout.m[2][3] = 0.0f;
-//	mpout.m[3][3] = 1.0f;
-//}
-//
-//void XMatPerspectiveLH(XMATRIX44 &mpout, const float &FOV, const float &Aspect, const float &NearPlane, const float &FarPlane) {
-//	float x, y;
-//	float ang = FOV / 2.0f;
-//
-//	y = cos(ang) / sin(ang);
-//	x = y / Aspect;
-//
-//	mpout.m[0][0] = x;
-//	mpout.m[1][1] = y;
-//	mpout.m[2][2] = FarPlane / (FarPlane - NearPlane);
-//	mpout.m[2][3] = 1.0;
-//	mpout.m[3][2] = -(NearPlane*FarPlane) / (FarPlane - NearPlane);
-//	mpout.m[3][3] = 0.0f;
-//
-//}
-//
-//void XMatPerspectiveRH(XMATRIX44 &mpout, const float &FOV, const float &Aspect, const float &NearPlane, const float &FarPlane)
-//{
-//	float x, y;
-//	float ang = FOV / 2.0f;
-//
-//	y = cos(ang) / sin(ang);
-//	x = y / Aspect;
-//
-//	mpout.m[0][0] = x;
-//	mpout.m[1][1] = y;
-//	mpout.m[2][2] = FarPlane / (NearPlane - FarPlane);
-//	mpout.m[2][3] = -1.0;
-//	mpout.m[3][2] = (NearPlane*FarPlane) / (NearPlane - FarPlane);
-//	mpout.m[3][3] = 0.0f;
-//}
-//
-//void XMatOrthoLH(XMATRIX44 &m, const float &w, const float &h, const float &zn, const float &zf) {
-//	m.m[0][0] = 2.0f / w;
-//	m.m[1][1] = 2.0f / h;
-//	m.m[2][2] = 1.0f / (zf - zn);
-//	m.m[3][2] = -zn / (zf - zn);
-//	m.m[3][3] = 1.0f;
-//}
-//
-//void XMatOrthoRH(XMATRIX44 &m, const float &w, const float &h, const float &zn, const float &zf) {
-//	m.m[0][0] = 2.0f / w;
-//	m.m[1][1] = 2.0f / h;
-//	m.m[2][2] = 1.0f / (zn - zf);
-//	m.m[3][2] = zn / (zn - zf);
-//	m.m[3][3] = 1.0f;
-//}
-//
-//void XMATRIX44::Inverse(XMATRIX44 *o) {
-//#if DOUBLE_FOR_INVERSE
-//	XMATRIX44_64 tmp64 = XMATRIX44_64(this);
-//	double det =
-//#else
-//	XMATRIX44 tmp64 = *this;
-//	float det =
-//#endif
-//		tmp64.m11*tmp64.m22*tmp64.m33*tmp64.m44 + tmp64.m11*tmp64.m23*tmp64.m34*tmp64.m42 + tmp64.m11*tmp64.m24*tmp64.m32*tmp64.m43
-//		+ tmp64.m12*tmp64.m21*tmp64.m34*tmp64.m43 + tmp64.m12*tmp64.m23*tmp64.m31*tmp64.m44 + tmp64.m12*tmp64.m24*tmp64.m33*tmp64.m41
-//		+ tmp64.m13*tmp64.m21*tmp64.m32*tmp64.m44 + tmp64.m13*tmp64.m22*tmp64.m34*tmp64.m41 + tmp64.m13*tmp64.m24*tmp64.m31*tmp64.m42
-//		+ tmp64.m14*tmp64.m21*tmp64.m33*tmp64.m42 + tmp64.m14*tmp64.m22*tmp64.m31*tmp64.m43 + tmp64.m14*tmp64.m23*tmp64.m32*tmp64.m41
-//		- tmp64.m11*tmp64.m22*tmp64.m34*tmp64.m43 - tmp64.m11*tmp64.m23*tmp64.m32*tmp64.m44 - tmp64.m11*tmp64.m24*tmp64.m33*tmp64.m42
-//		- tmp64.m12*tmp64.m21*tmp64.m33*tmp64.m44 - tmp64.m12*tmp64.m23*tmp64.m34*tmp64.m41 - tmp64.m12*tmp64.m24*tmp64.m31*tmp64.m43
-//		- tmp64.m13*tmp64.m21*tmp64.m34*tmp64.m42 - tmp64.m13*tmp64.m22*tmp64.m31*tmp64.m44 - tmp64.m13*tmp64.m24*tmp64.m32*tmp64.m41
-//		- tmp64.m14*tmp64.m21*tmp64.m32*tmp64.m43 - tmp64.m14*tmp64.m22*tmp64.m33*tmp64.m41 - tmp64.m14*tmp64.m23*tmp64.m31*tmp64.m42;
-//#if DOUBLE_FOR_INVERSE
-//	if (det == 0.0) {
-//#else
-//	if (det == 0.0f) {
-//#endif
-//		printf("\n\nThe Universe stopped, no det for Matrix, all ends here.\n\n");
-//		exit(666);
-//	}
-//#if DOUBLE_FOR_INVERSE
-//	det = 1.0 / det;
-//	XMATRIX44_64 out;
-//#else
-//	det = 1.0f / det;
-//	XMATRIX44 out;
-//#endif
-//
-//	out.m11 = tmp64.m22*tmp64.m33*tmp64.m44 + tmp64.m23*tmp64.m34*tmp64.m42 + tmp64.m24*tmp64.m32*tmp64.m43 - tmp64.m22*tmp64.m34*tmp64.m43 - tmp64.m23*tmp64.m32*tmp64.m44 - tmp64.m24*tmp64.m33*tmp64.m42;
-//	out.m12 = tmp64.m12*tmp64.m34*tmp64.m43 + tmp64.m13*tmp64.m32*tmp64.m44 + tmp64.m14*tmp64.m33*tmp64.m42 - tmp64.m12*tmp64.m33*tmp64.m44 - tmp64.m13*tmp64.m34*tmp64.m42 - tmp64.m14*tmp64.m32*tmp64.m43;
-//	out.m13 = tmp64.m12*tmp64.m23*tmp64.m44 + tmp64.m13*tmp64.m24*tmp64.m42 + tmp64.m14*tmp64.m22*tmp64.m43 - tmp64.m12*tmp64.m24*tmp64.m43 - tmp64.m13*tmp64.m22*tmp64.m44 - tmp64.m14*tmp64.m23*tmp64.m42;
-//	out.m14 = tmp64.m12*tmp64.m24*tmp64.m33 + tmp64.m13*tmp64.m22*tmp64.m34 + tmp64.m14*tmp64.m23*tmp64.m32 - tmp64.m12*tmp64.m23*tmp64.m34 - tmp64.m13*tmp64.m24*tmp64.m32 - tmp64.m14*tmp64.m22*tmp64.m33;
-//	out.m21 = tmp64.m21*tmp64.m34*tmp64.m43 + tmp64.m23*tmp64.m31*tmp64.m44 + tmp64.m24*tmp64.m33*tmp64.m41 - tmp64.m21*tmp64.m33*tmp64.m44 - tmp64.m23*tmp64.m34*tmp64.m41 - tmp64.m24*tmp64.m31*tmp64.m43;
-//	out.m22 = tmp64.m11*tmp64.m33*tmp64.m44 + tmp64.m13*tmp64.m34*tmp64.m41 + tmp64.m14*tmp64.m31*tmp64.m43 - tmp64.m11*tmp64.m34*tmp64.m43 - tmp64.m13*tmp64.m31*tmp64.m44 - tmp64.m14*tmp64.m33*tmp64.m41;
-//	out.m23 = tmp64.m11*tmp64.m24*tmp64.m43 + tmp64.m13*tmp64.m21*tmp64.m44 + tmp64.m14*tmp64.m23*tmp64.m41 - tmp64.m11*tmp64.m23*tmp64.m44 - tmp64.m13*tmp64.m24*tmp64.m41 - tmp64.m14*tmp64.m21*tmp64.m43;
-//	out.m24 = tmp64.m11*tmp64.m23*tmp64.m34 + tmp64.m13*tmp64.m24*tmp64.m31 + tmp64.m14*tmp64.m21*tmp64.m33 - tmp64.m11*tmp64.m24*tmp64.m33 - tmp64.m13*tmp64.m21*tmp64.m34 - tmp64.m14*tmp64.m23*tmp64.m31;
-//	out.m31 = tmp64.m21*tmp64.m32*tmp64.m44 + tmp64.m22*tmp64.m34*tmp64.m41 + tmp64.m24*tmp64.m31*tmp64.m42 - tmp64.m21*tmp64.m34*tmp64.m42 - tmp64.m22*tmp64.m31*tmp64.m44 - tmp64.m24*tmp64.m32*tmp64.m41;
-//	out.m32 = tmp64.m11*tmp64.m34*tmp64.m42 + tmp64.m12*tmp64.m31*tmp64.m44 + tmp64.m14*tmp64.m32*tmp64.m41 - tmp64.m11*tmp64.m32*tmp64.m44 - tmp64.m12*tmp64.m34*tmp64.m41 - tmp64.m14*tmp64.m31*tmp64.m42;
-//	out.m33 = tmp64.m11*tmp64.m22*tmp64.m44 + tmp64.m12*tmp64.m24*tmp64.m41 + tmp64.m14*tmp64.m21*tmp64.m42 - tmp64.m11*tmp64.m24*tmp64.m42 - tmp64.m12*tmp64.m21*tmp64.m44 - tmp64.m14*tmp64.m22*tmp64.m41;
-//	out.m34 = tmp64.m11*tmp64.m24*tmp64.m32 + tmp64.m12*tmp64.m21*tmp64.m34 + tmp64.m14*tmp64.m22*tmp64.m31 - tmp64.m11*tmp64.m22*tmp64.m34 - tmp64.m12*tmp64.m24*tmp64.m31 - tmp64.m14*tmp64.m21*tmp64.m32;
-//	out.m41 = tmp64.m21*tmp64.m33*tmp64.m42 + tmp64.m22*tmp64.m31*tmp64.m43 + tmp64.m23*tmp64.m32*tmp64.m41 - tmp64.m21*tmp64.m32*tmp64.m43 - tmp64.m22*tmp64.m33*tmp64.m41 - tmp64.m23*tmp64.m31*tmp64.m42;
-//	out.m42 = tmp64.m11*tmp64.m32*tmp64.m43 + tmp64.m12*tmp64.m33*tmp64.m41 + tmp64.m13*tmp64.m31*tmp64.m42 - tmp64.m11*tmp64.m33*tmp64.m42 - tmp64.m12*tmp64.m31*tmp64.m43 - tmp64.m13*tmp64.m32*tmp64.m41;
-//	out.m43 = tmp64.m11*tmp64.m23*tmp64.m42 + tmp64.m12*tmp64.m21*tmp64.m43 + tmp64.m13*tmp64.m22*tmp64.m41 - tmp64.m11*tmp64.m22*tmp64.m43 - tmp64.m12*tmp64.m23*tmp64.m41 - tmp64.m13*tmp64.m21*tmp64.m42;
-//	out.m44 = tmp64.m11*tmp64.m22*tmp64.m33 + tmp64.m12*tmp64.m23*tmp64.m31 + tmp64.m13*tmp64.m21*tmp64.m32 - tmp64.m11*tmp64.m23*tmp64.m32 - tmp64.m12*tmp64.m21*tmp64.m33 - tmp64.m13*tmp64.m22*tmp64.m31;
-//
-//	for (int i = 0; i < 16; i++) {
-//#if DOUBLE_FOR_INVERSE
-//		double val = det*out.mat[i];
-//		(*o).mat[i] = static_cast<float>(val);
-//#else
-//		(*o).mat[i] = det*out.mat[i];
-//#endif
-//	}
-//	}
+void XVecTransformLH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
+
+}
+void XVecTransformNormalLH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
+
+}
+
+void XVecTransformRH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
+
+}
+void XVecTransformNormalRH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
+
+}
+
+void XVecDot(float &vecDot, const XVECTOR3 &A, const XVECTOR3 &B) {
+	vecDot = (A.x*B.x) + (A.y*B.y) + (A.z*B.z);
+}
+void XVecLength(float &vecLenght, const XVECTOR3 &A) {
+	vecLenght = XVECTOR3(A).Length();
+}
+void XVecCross(XVECTOR3 &vecCross, const XVECTOR3 &A, const XVECTOR3 &B) {
+	vecCross.x = (A.y*B.z) - (A.z*B.y);
+	vecCross.y = -(A.x*B.z) + (A.z*B.x);
+	vecCross.z = (A.x*B.y) - (A.y*B.x);
+}
+void XVec3Normalize(XVECTOR3 &vecNormal, const XVECTOR3 &A) {
+	vecNormal = A;
+	vecNormal.Normalize();
+}
 
 XVECTOR2& XVECTOR2::operator += (const XVECTOR2& other) {
 	this->x = this->x + other.x;
@@ -364,6 +492,14 @@ void XVECTOR3::Normalize(){
 }
 float XVECTOR3::Length(){
 	return (sqrt(pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2)));
+}
+
+
+XMATRIX44_64::XMATRIX44_64() {
+
+}
+XMATRIX44_64::XMATRIX44_64(XMATRIX44* i) {
+
 }
 
 XMATRIX44& XMATRIX44::operator *= (const XMATRIX44& other){
@@ -497,21 +633,21 @@ XMATRIX44 XMATRIX44::operator - () const{
 
 XMATRIX44 XMATRIX44::operator * (const XMATRIX44& other) const{
 	return XMATRIX44((this->m11*other.m11) + (this->m12*other.m21) + (this->m13*other.m31) + (this->m14*other.m41),
-	(this->m11*other.m12) + (this->m12*other.m22) + (this->m13*other.m32) + (this->m14*other.m42),
-	(this->m11*other.m13) + (this->m12*other.m23) + (this->m13*other.m33) + (this->m14*other.m43),
-	(this->m11*other.m14) + (this->m12*other.m24) + (this->m13*other.m34) + (this->m14*other.m44),
-	(this->m21*other.m11) + (this->m22*other.m21) + (this->m23*other.m31) + (this->m24*other.m41),
-	(this->m21*other.m12) + (this->m22*other.m22) + (this->m23*other.m32) + (this->m24*other.m42),
-	(this->m21*other.m13) + (this->m22*other.m23) + (this->m23*other.m33) + (this->m24*other.m43),
-	(this->m21*other.m14) + (this->m22*other.m24) + (this->m23*other.m34) + (this->m24*other.m44),
-	(this->m31*other.m11) + (this->m32*other.m21) + (this->m33*other.m31) + (this->m34*other.m41),
-	(this->m31*other.m12) + (this->m32*other.m22) + (this->m33*other.m32) + (this->m34*other.m42),
-	(this->m31*other.m13) + (this->m32*other.m23) + (this->m33*other.m33) + (this->m34*other.m43),
-	(this->m31*other.m14) + (this->m32*other.m24) + (this->m33*other.m34) + (this->m34*other.m44),
-	(this->m41*other.m11) + (this->m42*other.m21) + (this->m43*other.m31) + (this->m44*other.m41),
-	(this->m41*other.m12) + (this->m42*other.m22) + (this->m43*other.m32) + (this->m44*other.m42),
-	(this->m41*other.m13) + (this->m42*other.m23) + (this->m43*other.m33) + (this->m44*other.m43),
-	(this->m41*other.m14) + (this->m42*other.m24) + (this->m43*other.m34) + (this->m44*other.m44));
+					 (this->m11*other.m12) + (this->m12*other.m22) + (this->m13*other.m32) + (this->m14*other.m42),
+					 (this->m11*other.m13) + (this->m12*other.m23) + (this->m13*other.m33) + (this->m14*other.m43),
+					 (this->m11*other.m14) + (this->m12*other.m24) + (this->m13*other.m34) + (this->m14*other.m44),
+					 (this->m21*other.m11) + (this->m22*other.m21) + (this->m23*other.m31) + (this->m24*other.m41),
+					 (this->m21*other.m12) + (this->m22*other.m22) + (this->m23*other.m32) + (this->m24*other.m42),
+					 (this->m21*other.m13) + (this->m22*other.m23) + (this->m23*other.m33) + (this->m24*other.m43),
+					 (this->m21*other.m14) + (this->m22*other.m24) + (this->m23*other.m34) + (this->m24*other.m44),
+					 (this->m31*other.m11) + (this->m32*other.m21) + (this->m33*other.m31) + (this->m34*other.m41),
+					 (this->m31*other.m12) + (this->m32*other.m22) + (this->m33*other.m32) + (this->m34*other.m42),
+					 (this->m31*other.m13) + (this->m32*other.m23) + (this->m33*other.m33) + (this->m34*other.m43),
+					 (this->m31*other.m14) + (this->m32*other.m24) + (this->m33*other.m34) + (this->m34*other.m44),
+					 (this->m41*other.m11) + (this->m42*other.m21) + (this->m43*other.m31) + (this->m44*other.m41),
+					 (this->m41*other.m12) + (this->m42*other.m22) + (this->m43*other.m32) + (this->m44*other.m42),
+					 (this->m41*other.m13) + (this->m42*other.m23) + (this->m43*other.m33) + (this->m44*other.m43),
+					 (this->m41*other.m14) + (this->m42*other.m24) + (this->m43*other.m34) + (this->m44*other.m44));
 }
 XMATRIX44 XMATRIX44::operator + (const XMATRIX44& other) const{
 	return XMATRIX44(this->m11 + other.m11, this->m12 + other.m12, this->m13 + other.m13, this->m14 + other.m14,
