@@ -5,7 +5,7 @@ void XMatMultiply(XMATRIX44 &mpout, const XMATRIX44 &A, const XMATRIX44 &B)
 	mpout = A*B;
 }
 void XMatTranslation(XMATRIX44 &mpout, const float &x, const float &y, const float &z){
-	mpout.m11 += x;
+	/*mpout.m11 += x;
 	mpout.m21 += y;
 	mpout.m31 += z;
 
@@ -19,10 +19,13 @@ void XMatTranslation(XMATRIX44 &mpout, const float &x, const float &y, const flo
 
 	mpout.m14 += x;
 	mpout.m24 += y;
-	mpout.m34 += z;
+	mpout.m34 += z;*/
+	mpout.m41 += x;
+	mpout.m42 += y;
+	mpout.m43 += z;
 }
 void XMatTranslation(XMATRIX44 &mpout, XVECTOR3 &translation){
-	mpout.m11 += translation.x;
+	/*mpout.m11 += translation.x;
 	mpout.m21 += translation.y;
 	mpout.m31 += translation.z;
 
@@ -36,24 +39,27 @@ void XMatTranslation(XMATRIX44 &mpout, XVECTOR3 &translation){
 
 	mpout.m14 += translation.x;
 	mpout.m24 += translation.y;
-	mpout.m34 += translation.z;
+	mpout.m34 += translation.z;*/
+	mpout.m41 += translation.x;
+	mpout.m42 += translation.y;
+	mpout.m43 += translation.z;
 }
 void XMatScaling(XMATRIX44 &mpout, const float &x, const float &y, const float &z){
 	mpout.m11 *= x;
-	mpout.m21 *= y;
-	mpout.m31 *= z;
+	//mpout.m21 *= y;
+	//mpout.m31 *= z;
 
-	mpout.m12 *= x;
+	//mpout.m12 *= x;
 	mpout.m22 *= y;
-	mpout.m32 *= z;
+	//mpout.m32 *= z;
 
-	mpout.m13 *= x;
-	mpout.m23 *= y;
+	//mpout.m13 *= x;
+	//mpout.m23 *= y;
 	mpout.m33 *= z;
 
-	mpout.m14 *= x;
+	/*mpout.m14 *= x;
 	mpout.m24 *= y;
-	mpout.m34 *= z;
+	mpout.m34 *= z;*/
 }
 void XMatRotationXLH(XMATRIX44 &mpout, const float &x){
 	XMATRIX44 pivot = mpout;
@@ -496,10 +502,16 @@ float XVECTOR3::Length(){
 
 
 XMATRIX44_64::XMATRIX44_64() {
-
+	m11 = 1.0f; m12 = 0.0f; m13 = 0.0f; m14 = 0.0f;
+	m21 = 0.0f; m22 = 1.0f; m23 = 0.0f; m24 = 0.0f;
+	m31 = 0.0f; m32 = 0.0f; m33 = 1.0f; m34 = 0.0f;
+	m41 = 0.0f; m42 = 0.0f; m43 = 0.0f; m44 = 1.0f;
 }
 XMATRIX44_64::XMATRIX44_64(XMATRIX44* i) {
-
+	m11 = i->m11; m12 = i->m12; m13 = i->m13; m14 = i->m14;
+	m21 = i->m21; m22 = i->m22; m23 = i->m23; m24 = i->m24;
+	m31 = i->m31; m32 = i->m32; m33 = i->m33; m34 = i->m34;
+	m41 = i->m41; m42 = i->m42; m43 = i->m43; m44 = i->m44;
 }
 
 XMATRIX44& XMATRIX44::operator *= (const XMATRIX44& other){
