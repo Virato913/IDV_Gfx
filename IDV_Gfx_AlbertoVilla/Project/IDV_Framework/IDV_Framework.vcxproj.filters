@@ -22,10 +22,46 @@
     <Filter Include="Header Files\IDVWindow\Win32">
       <UniqueIdentifier>{d34a5f3f-6b5a-42c1-8994-6a610cbe50bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\IDVScene">
+      <UniqueIdentifier>{b52eaddc-c60f-40dd-9f6a-dd56d2e1e67b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IDVUtils">
+      <UniqueIdentifier>{b8035bf7-0c9f-4636-9a45-5c5bfa1bc130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IDVVideo">
+      <UniqueIdentifier>{13a867e3-8300-4550-be87-91fc9c88ddc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IDVScene">
+      <UniqueIdentifier>{7620e45b-71ed-4e64-b141-02b3777994db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IDVUtils">
+      <UniqueIdentifier>{612fc32d-970c-4102-a2c1-1fab0634433b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IDVVideo">
+      <UniqueIdentifier>{58b9cac7-980d-44e7-8774-381d84027230}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\IDVWindow\Win32\IDVWin32Manager.cpp">
       <Filter>Source Files\IDVWindow\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IDVUtils\IDVUtils.cpp">
+      <Filter>Source Files\IDVUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IDVVideo\IDVBaseDriver.cpp">
+      <Filter>Source Files\IDVVideo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IDVVideo\IDVD3DXDriver.cpp">
+      <Filter>Source Files\IDVVideo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IDVVideo\IDVD3DXShader.cpp">
+      <Filter>Source Files\IDVVideo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IDVVideo\IDVGLDriver.cpp">
+      <Filter>Source Files\IDVVideo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IDVVideo\IDVGLShader.cpp">
+      <Filter>Source Files\IDVVideo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +73,24 @@
     </ClInclude>
     <ClInclude Include="incl\IDVDefs.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\IDVUtils\IDVUtils.h">
+      <Filter>Header Files\IDVUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\IDVVideo\IDVBaseDriver.h">
+      <Filter>Header Files\IDVVideo</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\IDVVideo\IDVD3DXDriver.h">
+      <Filter>Header Files\IDVVideo</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\IDVVideo\IDVD3DXShader.h">
+      <Filter>Header Files\IDVVideo</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\IDVVideo\IDVGLDriver.h">
+      <Filter>Header Files\IDVVideo</Filter>
+    </ClInclude>
+    <ClInclude Include="incl\IDVVideo\IDVGLShader.h">
+      <Filter>Header Files\IDVVideo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

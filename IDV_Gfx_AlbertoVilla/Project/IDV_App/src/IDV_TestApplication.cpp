@@ -16,10 +16,13 @@ void IDVTestApplication::DestroyAssets() {
 
 void IDVTestApplication::OnUpdate() {
 
+	OnDraw();
 }
 
 void IDVTestApplication::OnDraw(){
+	m_pWindow->m_pVideoDriver->Clear();
 
+	m_pWindow->m_pVideoDriver->SwapBuffers();
 }
 
 void IDVTestApplication::OnInput() {

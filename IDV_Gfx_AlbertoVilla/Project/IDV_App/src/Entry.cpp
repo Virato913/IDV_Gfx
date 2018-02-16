@@ -12,7 +12,7 @@ IDVBaseWindow	   *g_pWindow = 0;
 
 int main(int arg, char ** args) {
 
-	XMATRIX44 Position, RotationX, RotationY, RotationZ, Scale, Projection, Final;
+	/*XMATRIX44 Position, RotationX, RotationY, RotationZ, Scale, Projection, Final;
 	XMatTranslation(Position, 15.0f, -5.0f, 0.0f);
 	XMatRotationXLH(RotationX, ToRadian(90.0f));
 	XMatRotationYLH(RotationY, ToRadian(15.0f));
@@ -27,9 +27,9 @@ int main(int arg, char ** args) {
 	printf("RotationZ\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n", RotationZ.m11, RotationZ.m12, RotationZ.m13, RotationZ.m14, RotationZ.m21, RotationZ.m22, RotationZ.m23, RotationZ.m24, RotationZ.m31, RotationZ.m32, RotationZ.m33, RotationZ.m34, RotationZ.m41, RotationZ.m42, RotationZ.m43, RotationZ.m44);
 	printf("Scale\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n", Scale.m11, Scale.m12, Scale.m13, Scale.m14, Scale.m21, Scale.m22, Scale.m23, Scale.m24, Scale.m31, Scale.m32, Scale.m33, Scale.m34, Scale.m41, Scale.m42, Scale.m43, Scale.m44);
 	printf("Projection\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n", Projection.m11, Projection.m12, Projection.m13, Projection.m14, Projection.m21, Projection.m22, Projection.m23, Projection.m24, Projection.m31, Projection.m32, Projection.m33, Projection.m34, Projection.m41, Projection.m42, Projection.m43, Projection.m44);
-	printf("Final\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n", Final.m11, Final.m12, Final.m13, Final.m14, Final.m21, Final.m22, Final.m23, Final.m24, Final.m31, Final.m32, Final.m33, Final.m34, Final.m41, Final.m42, Final.m43, Final.m44);
+	printf("Final\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n", Final.m11, Final.m12, Final.m13, Final.m14, Final.m21, Final.m22, Final.m23, Final.m24, Final.m31, Final.m32, Final.m33, Final.m34, Final.m41, Final.m42, Final.m43, Final.m44);*/
 
-	/*g_pApplication = new IDVTestApplication();
+	g_pApplication = new IDVTestApplication();
 	g_pWindow = new IDVWin32Manager((IDVBaseApplication*)g_pApplication);
 	g_pWindow->InitGlobalVars();
 	g_pWindow->OnCreateApplication();
@@ -39,7 +39,7 @@ int main(int arg, char ** args) {
 	g_pWindow->OnDestroyApplication();
 
 	delete g_pWindow;
-	delete g_pApplication;*/
+	delete g_pApplication;
 
 	return 0;
 }
