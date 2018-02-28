@@ -44,6 +44,7 @@ void IDVD3DXDriver::InitDriver(){
 	//	Device
 	//	Device Context
 	//	Swap Chain
+#define DEBUG_DRIVER 1
 	HRESULT hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL,
 #if DEBUG_DRIVER
 		D3D11_CREATE_DEVICE_DEBUG,	// Debug errors

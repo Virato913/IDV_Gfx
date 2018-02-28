@@ -1,0 +1,13 @@
+﻿  IDV_TestApplication.cpp
+  Entry.cpp
+  Generating Code...
+IDV_Framework.lib(IDVWin32Manager.obj) : error LNK2019: unresolved external symbol SDL_GetError referenced in function "public: virtual void __cdecl IDVWin32Manager::OnCreateApplication(void)" (?OnCreateApplication@IDVWin32Manager@@UEAAXXZ)
+IDV_Framework.lib(IDVWin32Manager.obj) : error LNK2019: unresolved external symbol SDL_SetVideoMode referenced in function "public: virtual void __cdecl IDVWin32Manager::OnCreateApplication(void)" (?OnCreateApplication@IDVWin32Manager@@UEAAXXZ)
+IDV_Framework.lib(IDVWin32Manager.obj) : error LNK2019: unresolved external symbol SDL_WM_SetCaption referenced in function "public: virtual void __cdecl IDVWin32Manager::OnCreateApplication(void)" (?OnCreateApplication@IDVWin32Manager@@UEAAXXZ)
+IDV_Framework.lib(IDVWin32Manager.obj) : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: virtual void __cdecl IDVWin32Manager::ProcessInput(void)" (?ProcessInput@IDVWin32Manager@@UEAAXXZ)
+IDV_Framework.lib(IDVWin32Manager.obj) : error LNK2019: unresolved external symbol SDL_Init referenced in function "public: virtual void __cdecl IDVWin32Manager::OnCreateApplication(void)" (?OnCreateApplication@IDVWin32Manager@@UEAAXXZ)
+IDV_Framework.lib(IDVWin32Manager.obj) : error LNK2019: unresolved external symbol SDL_Quit referenced in function "public: virtual void __cdecl IDVWin32Manager::OnDestroyApplication(void)" (?OnDestroyApplication@IDVWin32Manager@@UEAAXXZ)
+MSVCRTD.lib(exe_winmain.obj) : error LNK2019: unresolved external symbol WinMain referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\Alumno14\Desktop\Weas de Gráficas\Proyecto del profe\IDV_Gfx\Project\ThirdParty\SDL-1.2.14\lib\SDL.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\Alumno14\Desktop\Weas de Gráficas\Proyecto del profe\IDV_Gfx\Project\ThirdParty\glew-2.0.0\lib\glew.lib : warning LNK4272: library machine type 'X86' conflicts with target machine type 'x64'
+C:\Users\Alumno14\Desktop\Weas de Gráficas\Proyecto del profe\IDV_Gfx\Project\Bin\IDV_App.exe : fatal error LNK1120: 7 unresolved externals

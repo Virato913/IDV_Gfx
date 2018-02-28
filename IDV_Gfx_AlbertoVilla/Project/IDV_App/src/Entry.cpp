@@ -10,6 +10,15 @@
 IDVBaseApplication *g_pApplication = 0;
 IDVBaseWindow	   *g_pWindow = 0;
 
+#include <string>
+#include <windows.h>
+
+std::string getexepath()
+{
+	char result[MAX_PATH];
+	return std::string(result, GetModuleFileName(NULL, result, MAX_PATH));
+}
+
 int main(int arg, char ** args) {
 
 	/*XMATRIX44 Position, RotationX, RotationY, RotationZ, Scale, Projection, Final;

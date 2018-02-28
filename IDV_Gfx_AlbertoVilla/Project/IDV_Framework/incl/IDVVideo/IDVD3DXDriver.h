@@ -14,7 +14,7 @@ using namespace Microsoft::WRL;
 
 class IDVD3DXDriver : public IDVBaseDriver {
 public:
-	IDVD3DXDriver() {  }
+	IDVD3DXDriver() : IDVBaseDriver(IDVAPI::DIRECTX) {  }
 	void	InitDriver();
 	void	CreateSurfaces();
 	void	DestroySurfaces();

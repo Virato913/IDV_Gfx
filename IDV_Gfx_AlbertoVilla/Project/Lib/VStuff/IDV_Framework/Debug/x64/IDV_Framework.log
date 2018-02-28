@@ -1,2 +1,15 @@
 ﻿  IDVWin32Manager.cpp
-c:\users\casa\documents\beto\weas de gráficas\nueva carpeta\idv_gfx\idv_gfx_albertovilla\project\idv_framework\src\idvwindow\win32\idvwin32manager.cpp : fatal error C1041: cannot open program database 'C:\Users\Casa\Documents\Beto\Weas de Gráficas\Nueva carpeta\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Lib\VStuff\IDV_Framework\Debug\x64\IDV_Framework.idb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+  IDVGLShader.cpp
+  IDVGLDriver.cpp
+c:\users\alumno14\desktop\weas de gráficas\proyecto del profe\idv_gfx\project\idv_framework\src\idvvideo\idvgldriver.cpp(108): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  IDVD3DXShader.cpp
+c:\users\alumno14\desktop\weas de gráficas\proyecto del profe\idv_gfx\project\idv_framework\src\idvvideo\idvd3dxshader.cpp(113): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
+  IDVD3DXDriver.cpp
+c:\users\alumno14\desktop\weas de gráficas\proyecto del profe\idv_gfx\project\idv_framework\src\idvvideo\idvd3dxdriver.cpp(157): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  IDVBaseDriver.cpp
+  IDVUtils.cpp
+c:\users\alumno14\desktop\weas de gráficas\proyecto del profe\idv_gfx\project\idv_framework\src\idvutils\idvutils.cpp(87): warning C4267: '=': conversion from 'size_t' to 'long', possible loss of data
+c:\users\alumno14\desktop\weas de gráficas\proyecto del profe\idv_gfx\project\idv_framework\src\idvutils\idvutils.cpp(95): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\alumno14\desktop\weas de gráficas\proyecto del profe\idv_gfx\project\idv_framework\src\idvutils\idvutils.cpp(96): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  IDV_Framework.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\Proyecto del profe\IDV_Gfx\Project\Lib\Debug\x64\IDV_Framework.lib

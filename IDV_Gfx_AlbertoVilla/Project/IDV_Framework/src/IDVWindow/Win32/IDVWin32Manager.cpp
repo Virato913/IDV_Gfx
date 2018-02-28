@@ -8,13 +8,6 @@
 // Windows
 #include <windows.h>
 #include <mmsystem.h>
-// Parser
-#include <IDVParser.h>
-#include <vector>
-
-Parser Mesh;
-std::vector<Parser::Coordinates*> MeshList;
-std::vector<Parser::Coordinates*>::iterator it;
 
 void IDVWin32Manager::InitGlobalVars() {
 	m_pApplication->InitVars();
@@ -32,12 +25,10 @@ void IDVWin32Manager::OnCreateApplication() {
 		printf("Video mode set failed: %s\n", SDL_GetError());
 	}
 
-	m_pApplication->CreateAssets();
 
+//	m_pVideoDriver = new IDVGLDriver();
 
-	//m_pVideoDriver = new GLDriver;
-
-	m_pVideoDriver = new IDVD3DXDriver;
+	m_pVideoDriver = new IDVD3DXDriver();
 	m_pVideoDriver->SetDimensions(width, height);
 
 	m_pVideoDriver->SetWindow(0);
@@ -70,36 +61,7 @@ void IDVWin32Manager::ProcessInput() {
 			if (evento.key.keysym.sym == SDLK_q) {
 				m_bAlive = false;
 			}
-			if (evento.key.keysym.sym == SDLK_o)
-			{
-				if (Mesh.Load("Pig", MeshList))
-				{
-					/*if (!MeshList.empty())
-					{
-						MeshList.clear();
-					}*/
-					printf("Pig.X cargado.\n");
-					it = MeshList.begin();
-				}
-				else
-				{
-					printf("No se cargo el archivo.\n");
-				}
-			}
-			if (evento.key.keysym.sym == SDLK_SPACE)
-			{
-				printf("(%f, %f, %f)\n", (*it)->x, (*it)->y, (*it)->z);
-				it++;
-			}
-			if (evento.key.keysym.sym == SDLK_RETURN)
-			{
-				while (it != MeshList.end())
-				{
-					printf("(%f, %f, %f)\n", (*it)->x, (*it)->y, (*it)->z);
-					it++;
-				}
-			}
-
+			
 		}break;
 
 		case SDL_QUIT: {
@@ -113,6 +75,8 @@ void IDVWin32Manager::ProcessInput() {
 		case SDL_VIDEORESIZE: {
 			printf("New dim %d x %d \n", evento.resize.w, evento.resize.h);
 		}break;
+
+
 		}
 	}
 }

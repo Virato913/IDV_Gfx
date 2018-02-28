@@ -8,7 +8,7 @@
 
 class IDVGLDriver : public IDVBaseDriver {
 public:
-	IDVGLDriver() {  }
+	IDVGLDriver() : IDVBaseDriver(IDVAPI::OPENGL) {}
 	void	InitDriver();
 	void	CreateSurfaces();
 	void	DestroySurfaces();

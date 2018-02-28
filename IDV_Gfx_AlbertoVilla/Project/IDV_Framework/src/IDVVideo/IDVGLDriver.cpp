@@ -8,9 +8,6 @@
 #include <iterator>
 #include <fstream>
 
-#pragma comment(lib,"glew.lib")
-#pragma comment(lib,"OpenGL32.Lib")
-
 void	IDVGLDriver::InitDriver() {
 
 	GLenum err = glewInit();
