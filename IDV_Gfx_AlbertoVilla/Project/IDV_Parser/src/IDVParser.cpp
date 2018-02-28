@@ -14,13 +14,13 @@ Parser::Parser() {
 	bMeshFound = false;
 }
 
-bool Parser::Load(std::string fName, std::vector<Coordinates*>& coords) {
+bool Parser::Load(/*std::string fName, */std::vector<Coordinates*>& coords) {
 	std::fstream fFile;
 	/*std::vector<Coordinates*> MeshList;
 	std::vector<Coordinates*>::iterator it;*/
 	std::string sIn;
 
-	fFile.open(fName + ".X", std::ios::in, std::ios::binary);
+	fFile.open(/*fName + */"Pig.X", std::ios::in, std::ios::binary);
 
 	if (fFile.is_open())
 	{

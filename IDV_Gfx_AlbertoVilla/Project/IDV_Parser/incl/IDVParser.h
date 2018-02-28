@@ -15,7 +15,7 @@ public:
 	char cChar, cInput;
 	int iVertexCount;
 	bool bMeshFound;
-	bool Load(std::string fName, std::vector<Coordinates*>& coords);
+	bool Load(/*std::string fName, */std::vector<Coordinates*>& coords);
 	Parser();
 };
 

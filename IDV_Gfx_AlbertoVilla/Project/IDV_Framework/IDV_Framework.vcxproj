@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IDVD3DMesh.cpp" />
+    <ClCompile Include="IDVGLMesh.cpp" />
     <ClCompile Include="src\IDVScene\IDVD3DQuad.cpp" />
     <ClCompile Include="src\IDVScene\IDVGLQuad.cpp" />
     <ClCompile Include="src\IDVScene\IDVPrimitiveInstance.cpp" />
@@ -33,6 +35,8 @@
     <ClCompile Include="src\IDVWindow\Win32\IDVWin32Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IDVD3DMesh.h" />
+    <ClInclude Include="IDVGLMesh.h" />
     <ClInclude Include="incl\IDVBase\IDVCoreBase.h" />
     <ClInclude Include="incl\IDVDefs.h" />
     <ClInclude Include="incl\IDVScene\IDVD3DQuad.h" />
@@ -128,7 +132,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)incl\;$(SolutionDir)ThirdParty\SDL-1.2.14\include;$(SolutionDir)ThirdParty\glew-2.0.0\include;$(SolutionDir)ThirdParty\DXMath\include;$(SolutionDir)IDVMath\Debug;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)incl\;$(SolutionDir)ThirdParty\SDL-1.2.14\include;$(SolutionDir)ThirdParty\glew-2.0.0\include;$(SolutionDir)ThirdParty\DXMath\include;$(SolutionDir)IDVMath;$(ProjectDir)IDV_Parser;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
