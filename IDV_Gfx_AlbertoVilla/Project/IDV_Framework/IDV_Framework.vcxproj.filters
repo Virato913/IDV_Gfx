@@ -78,10 +78,10 @@
     <ClCompile Include="src\IDVScene\IDVSceneProp.cpp">
       <Filter>Source Files\IDVScene</Filter>
     </ClCompile>
-    <ClCompile Include="IDVD3DMesh.cpp">
+    <ClCompile Include="src\IDVScene\IDVD3DMesh.cpp">
       <Filter>Source Files\IDVScene</Filter>
     </ClCompile>
-    <ClCompile Include="IDVGLMesh.cpp">
+    <ClCompile Include="src\IDVScene\IDVGLMesh.cpp">
       <Filter>Source Files\IDVScene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,10 +131,10 @@
     <ClInclude Include="incl\IDVScene\IDVSceneProp.h">
       <Filter>Header Files\IDVScene</Filter>
     </ClInclude>
-    <ClInclude Include="IDVD3DMesh.h">
+    <ClInclude Include="incl\IDVScene\IDVD3DMesh.h">
       <Filter>Header Files\IDVScene</Filter>
     </ClInclude>
-    <ClInclude Include="IDVGLMesh.h">
+    <ClInclude Include="incl\IDVScene\IDVGLMesh.h">
       <Filter>Header Files\IDVScene</Filter>
     </ClInclude>
   </ItemGroup>

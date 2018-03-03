@@ -1,6 +1,8 @@
 #include <IDVScene/IDVPrimitiveManager.h>
 #include <IDVScene/IDVGLQuad.h>
 #include <IDVScene/IDVD3DQuad.h>
+#include <IDVScene/IDVGLMesh.h>
+#include <IDVScene/IDVD3DMesh.h>
 
 
 PrimitiveBase*	PrimitiveManager::GetPrimitive(unsigned int index) {
@@ -17,6 +19,19 @@ int PrimitiveManager::CreateQuad() {
 		primitive = new GLQuad();
 	else
 		primitive = new D3DXQuad();
+
+	primitive->Create();
+	primitives.push_back(primitive);
+	return (int)(primitives.size() - 1);
+}
+
+int PrimitiveManager::CreateMesh() {
+	PrimitiveBase *primitive = 0;
+
+	if (this->SelectedApi == IDVAPI::OPENGL)
+		primitive = new GLMesh();
+	else
+		primitive = new D3DXMesh();
 
 	primitive->Create();
 	primitives.push_back(primitive);

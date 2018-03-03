@@ -1,19 +1,12 @@
 #include <IDVVideo/IDVD3DXShader.h>
-#include "IDVD3DMesh.h"
+#include <IDVScene/IDVD3DMesh.h>
 #include <IDVUtils/IDVUtils.h>
-#include <IDVParser.h>
 
 extern ComPtr<ID3D11Device>            D3D11Device;
 extern ComPtr<ID3D11DeviceContext>     D3D11DeviceContext;
 
 void D3DXMesh::Create() {
-	Parser Mesh;
-	std::vector<Parser::Coordinates*> coords;
-	std::vector<Parser::Indices*> index;
-	std::vector<Parser::Normals*> normals;
-	std::vector<Parser::TextureCoordinates*> uv;
-
-	Mesh.Load(coords, index, normals, uv);
+	//Mesh.Load(coords, index, normals, uv);
 
 	SigBase = IDVSig::HAS_TEXCOORDS0;
 

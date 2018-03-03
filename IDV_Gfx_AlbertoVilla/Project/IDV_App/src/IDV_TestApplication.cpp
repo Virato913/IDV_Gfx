@@ -11,7 +11,7 @@ void IDVTestApplication::CreateAssets() {
 
 	PrimitiveMgr = new PrimitiveManager(m_pWindow->m_pVideoDriver->SelectedApi);
 
-	int index = PrimitiveMgr->CreateQuad();
+	int index = PrimitiveMgr->CreateMesh();
 	QuadInst.CreateInstance(PrimitiveMgr->GetPrimitive(index), &VP);
 }
 

@@ -16,6 +16,7 @@ public:
 		pVP = vp;
 	}
 	int  CreateQuad();
+	int  CreateMesh();
 	void SetSceneProps(SceneProps *p);
 
 	void DrawPrimitives();

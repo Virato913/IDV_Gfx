@@ -14,13 +14,13 @@ Parser::Parser() {
 	bMeshFound = false;
 }
 
-bool Parser::Load(/*std::string fName, */std::vector<Coordinates*>& coords, std::vector<Indices*>& indices, std::vector<Normals*>& normals, std::vector<TextureCoordinates*>& uv) {
+bool Parser::Load(/*std::string fName, *//*std::vector<Coordinates>& coords, std::vector<Indices>& indices*//*, std::vector<Normals*>& normals, std::vector<TextureCoordinates*>& uv*/) {
 	std::fstream fFile;
 	/*std::vector<Coordinates*> MeshList;
 	std::vector<Coordinates*>::iterator it;*/
 	std::string sIn;
 
-	fFile.open(/*fName + */"Pig.X", std::ios::in, std::ios::binary);
+	fFile.open(/*fName + */"CerdoNuevo.X", std::ios::in, std::ios::binary);
 
 	if (fFile.is_open())
 	{
@@ -39,12 +39,12 @@ bool Parser::Load(/*std::string fName, */std::vector<Coordinates*>& coords, std:
 		{
 			for (int i = 0; i < iVertexCount; i++)
 			{
-				Coordinates* pivot = new Coordinates;
-				fFile >> pivot->x;
+				Coordinates pivot;
+				fFile >> pivot.x;
 				fFile >> cChar;
-				fFile >> pivot->y;
+				fFile >> pivot.y;
 				fFile >> cChar;
-				fFile >> pivot->z;
+				fFile >> pivot.z;
 				fFile >> cChar;
 				fFile >> cChar;
 				coords.push_back(pivot);
@@ -53,17 +53,20 @@ bool Parser::Load(/*std::string fName, */std::vector<Coordinates*>& coords, std:
 			fFile >> cChar;
 			for (int i = 0; i < iIndexCount; i++)
 			{
-				Indices* pivot = new Indices;
-				fFile >> pivot->w;
-				fFile >> cChar;
-				fFile >> pivot->x;
-				fFile >> cChar;
-				fFile >> pivot->y;
-				fFile >> cChar;
-				fFile >> pivot->z;
+				/*Indices pivot;*/
+				unsigned short pivot;
 				fFile >> cChar;
 				fFile >> cChar;
-				indices.push_back(pivot);
+				fFile >> pivot;
+				index.push_back(pivot);
+				fFile >> cChar;
+				fFile >> pivot;
+				index.push_back(pivot);
+				fFile >> cChar;
+				fFile >> pivot;
+				index.push_back(pivot);
+				fFile >> cChar;
+				fFile >> cChar;
 			}
 			bMeshFound = false;
 		}
@@ -82,15 +85,22 @@ bool Parser::Load(/*std::string fName, */std::vector<Coordinates*>& coords, std:
 		{
 			for (int i = 0; i < iVertexCount; i++)
 			{
-				Normals* pivot = new Normals;
-				fFile >> pivot->x;
+				/*Normals* pivot = new Normals;*/
+				/*fFile >> pivot->x;
 				fFile >> cChar;
 				fFile >> pivot->y;
 				fFile >> cChar;
 				fFile >> pivot->z;
 				fFile >> cChar;
+				fFile >> cChar;*/
+				/*normals.push_back(pivot);*/
+				fFile >> coords[i].nx;
 				fFile >> cChar;
-				normals.push_back(pivot);
+				fFile >> coords[i].ny;
+				fFile >> cChar;
+				fFile >> coords[i].nz;
+				fFile >> cChar;
+				fFile >> cChar;
 			}
 			bMeshFound = false;
 		}
@@ -109,13 +119,18 @@ bool Parser::Load(/*std::string fName, */std::vector<Coordinates*>& coords, std:
 		{
 			for (int i = 0; i < iVertexCount; i++)
 			{
-				TextureCoordinates* pivot = new TextureCoordinates;
+				/*TextureCoordinates* pivot = new TextureCoordinates;
 				fFile >> pivot->u;
 				fFile >> cChar;
 				fFile >> pivot->v;
 				fFile >> cChar;
 				fFile >> cChar;
-				uv.push_back(pivot);
+				uv.push_back(pivot);*/
+				fFile >> coords[i].u;
+				fFile >> cChar;
+				fFile >> coords[i].v;
+				//fFile >> cChar;
+				fFile >> cChar;
 			}
 			bMeshFound = false;
 		}

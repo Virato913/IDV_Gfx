@@ -11,6 +11,7 @@ using namespace Microsoft::WRL;
 #include <dxgi.h>
 #include <D3Dcompiler.h>
 #include <IDVMath.h>
+#include <IDVParser.h>
 
 #include <IDVVideo\IDVBaseDriver.h>
 #include <IDVScene\IDVPrimitive.h>
@@ -50,6 +51,12 @@ public:
 	unsigned short	indices[6];
 
 	/*D3DXMATRIX*/XMATRIX44		transform;
+
+	Parser Mesh;
+	std::vector<Parser::Coordinates*> coords;
+	std::vector<Parser::Indices*> index;
+	std::vector<Parser::Normals*> normals;
+	std::vector<Parser::TextureCoordinates*> uv;
 };
 
 #endif

@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IDVD3DMesh.cpp" />
-    <ClCompile Include="IDVGLMesh.cpp" />
+    <ClCompile Include="src\IDVScene\IDVD3DMesh.cpp" />
     <ClCompile Include="src\IDVScene\IDVD3DQuad.cpp" />
+    <ClCompile Include="src\IDVScene\IDVGLMesh.cpp" />
     <ClCompile Include="src\IDVScene\IDVGLQuad.cpp" />
     <ClCompile Include="src\IDVScene\IDVPrimitiveInstance.cpp" />
     <ClCompile Include="src\IDVScene\IDVPrimitiveManager.cpp" />
@@ -35,11 +35,11 @@
     <ClCompile Include="src\IDVWindow\Win32\IDVWin32Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IDVD3DMesh.h" />
-    <ClInclude Include="IDVGLMesh.h" />
     <ClInclude Include="incl\IDVBase\IDVCoreBase.h" />
     <ClInclude Include="incl\IDVDefs.h" />
+    <ClInclude Include="incl\IDVScene\IDVD3DMesh.h" />
     <ClInclude Include="incl\IDVScene\IDVD3DQuad.h" />
+    <ClInclude Include="incl\IDVScene\IDVGLMesh.h" />
     <ClInclude Include="incl\IDVScene\IDVGLQuad.h" />
     <ClInclude Include="incl\IDVScene\IDVPrimitive.h" />
     <ClInclude Include="incl\IDVScene\IDVPrimitiveInstance.h" />
