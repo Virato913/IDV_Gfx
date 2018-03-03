@@ -132,7 +132,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)incl\;$(SolutionDir)ThirdParty\SDL-1.2.14\include;$(SolutionDir)ThirdParty\glew-2.0.0\include;$(SolutionDir)ThirdParty\DXMath\include;$(SolutionDir)IDVMath;$(ProjectDir)IDV_Parser;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)incl\;$(SolutionDir)ThirdParty\SDL-1.2.14\include;$(SolutionDir)ThirdParty\glew-2.0.0\include;$(SolutionDir)ThirdParty\DXMath\include;$(SolutionDir)IDVMath;$(SolutionDir)IDV_Parser\incl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

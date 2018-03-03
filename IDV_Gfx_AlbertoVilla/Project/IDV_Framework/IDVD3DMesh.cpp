@@ -1,11 +1,20 @@
 #include <IDVVideo/IDVD3DXShader.h>
 #include "IDVD3DMesh.h"
 #include <IDVUtils/IDVUtils.h>
+#include <IDVParser.h>
 
 extern ComPtr<ID3D11Device>            D3D11Device;
 extern ComPtr<ID3D11DeviceContext>     D3D11DeviceContext;
 
 void D3DXMesh::Create() {
+	Parser Mesh;
+	std::vector<Parser::Coordinates*> coords;
+	std::vector<Parser::Indices*> index;
+	std::vector<Parser::Normals*> normals;
+	std::vector<Parser::TextureCoordinates*> uv;
+
+	Mesh.Load(coords, index, normals, uv);
+
 	SigBase = IDVSig::HAS_TEXCOORDS0;
 
 	char *vsSourceP = file2string("Shaders/VS_Mesh.hlsl");
@@ -19,7 +28,7 @@ void D3DXMesh::Create() {
 
 	int shaderID = g_pBaseDriver->CreateShader(vstr, fstr, SigBase);
 
-	vertices[0] = { -1.0f,  1.0f, 0.0f, 1.0f,  0.0f, 0.0f };
+	/*vertices[0] = { -1.0f,  1.0f, 0.0f, 1.0f,  0.0f, 0.0f };
 	vertices[1] = { -1.0f, -1.0f, 0.0f, 1.0f,  0.0f, 1.0f };
 	vertices[2] = { 1.0f, -1.0f, 0.0f, 1.0f,  1.0f, 1.0f };
 	vertices[3] = { 1.0f,  1.0f, 0.0f, 1.0f,  1.0f, 0.0f };
@@ -29,7 +38,7 @@ void D3DXMesh::Create() {
 	indices[2] = 0;
 	indices[3] = 3;
 	indices[4] = 2;
-	indices[5] = 0;
+	indices[5] = 0;*/
 
 	IDVD3DXShader* s = dynamic_cast<IDVD3DXShader*>(g_pBaseDriver->GetShaderIdx(shaderID));
 

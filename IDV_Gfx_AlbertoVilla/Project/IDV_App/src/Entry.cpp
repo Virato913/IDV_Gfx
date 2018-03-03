@@ -4,6 +4,8 @@
 #include <IDV_TestApplication.h>
 #include <IDVMath.h>
 
+#include <IDVParser.h>
+
 #define xPI 3.141592653589f
 #define ToRadian(d) ((d)*(xPI/180.0f))
 
