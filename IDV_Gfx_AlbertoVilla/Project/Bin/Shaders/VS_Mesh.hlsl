@@ -1,5 +1,5 @@
 cbuffer ConstantBuffer{
-    float4x4 WVP;
+   	float4x4 WVP;
 	float4x4 World;  
 	float4x4 WorldView;
 }
@@ -18,7 +18,7 @@ struct VS_OUTPUT{
 
 VS_OUTPUT VS( VS_INPUT input ){
     VS_OUTPUT OUT;
-    OUT.hposition = mul(WVP,input.position);
+    OUT.hposition = input.position;
     OUT.hnormal   = input.normal;
     OUT.texture0  = input.texture0;
 	return OUT;

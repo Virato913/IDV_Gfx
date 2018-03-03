@@ -3,6 +3,8 @@
 #include <IDVUtils/IDVUtils.h>
 
 void GLMesh::Create() {
+	Mesh.Load();
+
 	SigBase = IDVSig::HAS_TEXCOORDS0;
 
 	char *vsSourceP = file2string("Shaders/VS_Mesh.glsl");
@@ -35,7 +37,7 @@ void GLMesh::Create() {
 
 	glGenBuffers(1, &IB);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IB);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * Mesh.iIndexCount * sizeof(unsigned short), &Mesh.index[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,3 * Mesh.iIndexCount * sizeof(unsigned short), &Mesh.index[0], GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 }

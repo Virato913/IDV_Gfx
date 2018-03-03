@@ -9,8 +9,8 @@ class Parser {
 public: 
 	struct Coordinates
 	{
-		float x, y, z, w;
-		float nx, ny, nz, nw;
+		float x, y, z, w = 1.0f;
+		float nx, ny, nz, nw = 1.0f;
 		float u, v;
 	};
 	/*struct Indices
