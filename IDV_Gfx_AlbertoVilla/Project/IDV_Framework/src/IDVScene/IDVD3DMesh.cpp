@@ -100,8 +100,13 @@ void D3DXMesh::Draw(float *t, float *vp) {
 	UINT offset = 0;
 	UINT stride = sizeof(Parser::Coordinates);
 
-	D3DXMATRIX VP = vp;
-	CnstBuffer.WVP = transform;
+	XMATRIX44 Scale;
+	XMATRIX44 View;
+	XMATRIX44 Projection;
+	XMatViewLookAtLH(View, XVECTOR3(0.0f, 0.0f, -10.0f), XVECTOR3(0.0f, 0.0f, 1.0f), XVECTOR3(0.0f, 1.0f, 0.0f));
+	XMatPerspectiveLH(Projection, D3DXToRadian(60.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
+	XMatScaling(Scale, 1.0f, 1.0f, 1.0f);
+	CnstBuffer.WVP = Scale*View*Projection;
 	CnstBuffer.World = transform;
 	CnstBuffer.WorldView = transform;
 

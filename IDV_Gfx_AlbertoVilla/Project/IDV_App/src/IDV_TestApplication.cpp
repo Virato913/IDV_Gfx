@@ -7,7 +7,7 @@ void IDVTestApplication::InitVars() {
 }
 
 void IDVTestApplication::CreateAssets() {
-	D3DXMATRIX VP;
+	/*D3DXMATRIX*/XMATRIX44 VP;
 
 	PrimitiveMgr = new PrimitiveManager(m_pWindow->m_pVideoDriver->SelectedApi);
 

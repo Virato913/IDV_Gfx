@@ -13,6 +13,6 @@ uniform highp mat4 WorldView;
 void main(){
 	vecUVCoords = UV;	
 	Norm = Normal.xyz;
-	Pos = Vertex;
+	Pos = WVP*Vertex;
 	gl_Position = Pos;
 }

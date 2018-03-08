@@ -13,4 +13,3 @@ struct VS_OUTPUT{
 float4 FS( VS_OUTPUT input ) : SV_TARGET {
 	return float4(input.hnormal.xyz,1.0);
 }
-

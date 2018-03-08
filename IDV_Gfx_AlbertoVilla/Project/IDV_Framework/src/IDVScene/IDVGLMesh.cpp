@@ -55,13 +55,21 @@ void GLMesh::Draw(float *t, float *vp) {
 	sig |= gSig;
 	IDVGLShader * s = dynamic_cast<IDVGLShader*>(g_pBaseDriver->GetShaderSig(sig));
 
-	D3DXMATRIX VP = vp;
-	D3DXMATRIX WV = vp;
+	XMATRIX44 Scale;
+	XMATRIX44 View;
+	XMATRIX44 Projection;
+	XMatViewLookAtLH(View, XVECTOR3(0.0f, 0.0f, -10.0f), XVECTOR3(0.0f, 0.0f, 1.0f), XVECTOR3(0.0f, 1.0f, 0.0f));
+	XMatPerspectiveLH(Projection, D3DXToRadian(60.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
+	XMatScaling(Scale, 1.0f, 1.0f, 1.0f);
+
+	/*D3DXMATRIX*/XMATRIX44 VP = vp;
+	/*D3DXMATRIX*/XMATRIX44 WV = vp;
+	XMATRIX44 WVP = Scale*View*Projection;
 
 	glUseProgram(s->ShaderProg);
 
 	glUniformMatrix4fv(s->matWorldUniformLoc, 1, GL_FALSE, &transform.m[0][0]);
-	glUniformMatrix4fv(s->matWorldViewProjUniformLoc, 1, GL_FALSE, &transform.m[0][0]);
+	glUniformMatrix4fv(s->matWorldViewProjUniformLoc, 1, GL_FALSE, &WVP.m[0][0]);
 	glUniformMatrix4fv(s->matWorldViewUniformLoc, 1, GL_FALSE, &WV.m[0][0]);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VB);
