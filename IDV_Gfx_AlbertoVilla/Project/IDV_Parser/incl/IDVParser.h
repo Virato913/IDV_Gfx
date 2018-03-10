@@ -25,11 +25,19 @@ public:
 	{
 		float u, v;
 	};*/
+	struct DeclData
+	{
+		float x, y, z;
+		int id;
+	};
 	size_t iFound;
 	char cChar, cInput;
-	int iVertexCount, iIndexCount;
+	int iVertexCount, iIndexCount, iDeclDataCount, iMaterialsCount;
 	std::vector<Coordinates> coords;
 	std::vector<unsigned short> index;
+	std::vector<DeclData> tang;
+	std::vector<DeclData> binomials;
+	std::vector<std::vector<unsigned short>> materials;
 	bool bMeshFound;
 	bool Load(/*std::string fName, *//*std::vector<Coordinates>& coords, std::vector<Indices>& indices*//*, std::vector<Normals*>& normals, std::vector<TextureCoordinates*>& uv*/);
 	Parser();

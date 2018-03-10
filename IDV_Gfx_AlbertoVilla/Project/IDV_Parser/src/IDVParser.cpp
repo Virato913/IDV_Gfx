@@ -129,8 +129,105 @@ bool Parser::Load(/*std::string fName, *//*std::vector<Coordinates>& coords, std
 				fFile >> coords[i].u;
 				fFile >> cChar;
 				fFile >> coords[i].v;
-				//fFile >> cChar;
 				fFile >> cChar;
+				fFile >> cChar;
+			}
+			bMeshFound = false;
+		}
+		while (!bMeshFound)
+		{
+			getline(fFile, sIn);
+			iFound = sIn.find("  DeclData");
+			if (iFound == 0)
+			{
+				fFile >> iDeclDataCount;
+				fFile >> cChar;
+				bMeshFound = true;
+			}
+		}
+		if (bMeshFound)
+		{
+			DeclData pivotTang, pivotBinom;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> pivotTang.id;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> pivotBinom.id;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			fFile >> cChar;
+			getline(fFile, sIn);
+			getline(fFile, sIn);
+			for (int i = 0; i < iVertexCount; i++)
+			{
+				unsigned int pivot;
+				fFile >> pivot;
+				pivotTang.x = reinterpret_cast<float&>(pivot);
+				fFile >> cChar;
+				fFile >> pivot;
+				pivotTang.y = reinterpret_cast<float&>(pivot);
+				fFile >> cChar;
+				fFile >> pivot;
+				pivotTang.z = reinterpret_cast<float&>(pivot);
+				fFile >> cChar;
+				tang.push_back(pivotTang);
+				fFile >> pivot;
+				pivotBinom.x = reinterpret_cast<float&>(pivot);
+				fFile >> cChar;
+				fFile >> pivot;
+				pivotBinom.y = reinterpret_cast<float&>(pivot);
+				fFile >> cChar;
+				fFile >> pivot;
+				pivotBinom.z = reinterpret_cast<float&>(pivot);
+				fFile >> cChar;
+				binomials.push_back(pivotBinom);
+			}
+			bMeshFound = false;
+		}
+		while (!bMeshFound)
+		{
+			getline(fFile, sIn);
+			iFound = sIn.find("  MeshMaterialList");
+			if (iFound == 0)
+			{
+				fFile >> iMaterialsCount;
+				fFile >> cChar;
+				bMeshFound = true;
+			}
+		}
+		if (bMeshFound)
+		{
+			int iMatCount;
+			fFile >> iMatCount;
+			fFile >> cChar;
+			getline(fFile, sIn);
+			for (int j = 0; j < iMaterialsCount; ++j)
+			{
+				std::vector<unsigned short> matList;
+				for (int i = 0; i < iIndexCount; i++)
+				{
+					unsigned short pivot;
+					fFile >> pivot;
+					fFile >> cChar;
+					matList.push_back(pivot);
+					fFile >> pivot;
+					fFile >> cChar;
+					matList.push_back(pivot);
+					fFile >> pivot;
+					fFile >> cChar;
+					matList.push_back(pivot);
+				}
+				materials.push_back(matList);
 			}
 			bMeshFound = false;
 		}
