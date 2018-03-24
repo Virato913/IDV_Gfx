@@ -79,6 +79,23 @@ void IDVWin32Manager::ProcessInput() {
 				m_pApplication->inputManager.KeyStates[0][100] = true;
 
 			}
+			else if (evento.key.keysym.sym == SDLK_i)
+			{
+				m_pApplication->inputManager.KeyStates[0][105] = true;
+			}
+			else if (evento.key.keysym.sym == SDLK_j)
+			{
+				m_pApplication->inputManager.KeyStates[0][106] = true;
+			}
+			else if (evento.key.keysym.sym == SDLK_k)
+			{
+				m_pApplication->inputManager.KeyStates[0][107] = true;
+			}
+			else if (evento.key.keysym.sym == SDLK_l)
+			{
+				m_pApplication->inputManager.KeyStates[0][108] = true;
+
+			}
 
 		}break;
 
@@ -103,6 +120,23 @@ void IDVWin32Manager::ProcessInput() {
 			else if (evento.key.keysym.sym == SDLK_d)
 			{
 				m_pApplication->inputManager.KeyStates[0][100] = false;
+
+			}
+			else if (evento.key.keysym.sym == SDLK_i)
+			{
+				m_pApplication->inputManager.KeyStates[0][105] = false;
+			}
+			else if (evento.key.keysym.sym == SDLK_j)
+			{
+				m_pApplication->inputManager.KeyStates[0][106] = false;
+			}
+			else if (evento.key.keysym.sym == SDLK_k)
+			{
+				m_pApplication->inputManager.KeyStates[0][107] = false;
+			}
+			else if (evento.key.keysym.sym == SDLK_l)
+			{
+				m_pApplication->inputManager.KeyStates[0][108] = false;
 
 			}
 		}break;

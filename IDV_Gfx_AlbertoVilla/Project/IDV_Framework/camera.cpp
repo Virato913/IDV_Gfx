@@ -74,24 +74,68 @@ void Camera::StrafeRight(float dt)
 
 void Camera::MoveYaw(float f)
 {
-
+	if (f == 0.0f)
+	{
+		return;
+	}
+	XMATRIX44 rotation;
+	XMatRotationAxisLH(rotation, Up, f);
+	XVecTransformLH(Right, Right, rotation);
+	XVecTransformLH(Look, Look, rotation);
 }
 
 void Camera::MovePitch(float f)
 {
-
+	if (f == 0.0f)
+	{
+		return;
+	}
+	Pitch -= f;
+	if (Pitch > MaxPitch)
+	{
+		f += Pitch - MaxPitch;
+	}
+	else if (Pitch < -MaxPitch)
+	{
+		f += Pitch + MaxPitch;
+	}
+	XMATRIX44 rotation;
+	XMatRotationAxisLH(rotation, Right, f);
+	XVecTransformLH(Up, Up, rotation);
+	XVecTransformLH(Look, Look, rotation);
 }
 
 void Camera::MoveRoll(float f)
 {
-
+	if (f == 0.0f)
+	{
+		return;
+	}
+	XMATRIX44 rotation;
+	XMatRotationAxisLH(rotation, Look, f);
+	XVecTransformLH(Right, Right, rotation);
+	XVecTransformLH(Up, Up, rotation);
 }
 
 void Camera::Update(float dt)
 {
 	CreatePojection();
 	SetLookAt(Look);
-	VP = View*Projection;
+	VP = View*Projection;/*
+	XMatViewLookAtLH(View, Eye, Look, Up);
+	Right.x = View.m11;
+	Right.y = View.m21;
+	Right.z = View.m31;
+	Up.x = View.m12;
+	Up.y = View.m22;
+	Up.z = View.m32;
+	Look.x = View.m13;
+	Look.y = View.m23;
+	Look.z = View.m33;
+
+	float lookLengthOnXZ = sqrtf(Look.z * Look.z + Look.x * Look.x);
+	Pitch = atan2f(Look.y, lookLengthOnXZ);
+	Yaw = atan2f(Look.x, Look.z);*/
 }
 
 void Camera::Reset()

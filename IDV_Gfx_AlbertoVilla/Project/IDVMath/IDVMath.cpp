@@ -342,24 +342,168 @@ void XMATRIX44::Inverse(XMATRIX44 *o) {
 	}
 
 void XMatRotationAxisRH(XMATRIX44 &mpout, const XVECTOR3 &A, const float &B) {
+	XMATRIX44 Temp = mpout;
+	XVECTOR3 Normal;
+	float cosB = cos(B);
+	float sinB = sin(B);
+	float oneminusc = (1 - cosB);
+	XVec3Normalize(Normal, A);
+	Temp.m11 = (
+		(mpout.m11*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m21*((Normal.x*Normal.y*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m31*((Normal.x*Normal.z*oneminusc) - (sinB*Normal.y)))
+		);
+	Temp.m12 = (
+		(mpout.m12*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m22*((Normal.x*Normal.y*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m32*((Normal.x*Normal.z*oneminusc) - (sinB*Normal.y)))
+		);
+	Temp.m13 = (
+		(mpout.m13*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m23*((Normal.x*Normal.y*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m33*((Normal.x*Normal.z*oneminusc) - (sinB*Normal.y)))
+		);
+	Temp.m14 = (
+		(mpout.m14*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m24*((Normal.x*Normal.y*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m34*((Normal.x*Normal.z*oneminusc) - (sinB*Normal.y)))
+		);
 
+	Temp.m21 = (
+		(mpout.m11*((Normal.y*Normal.x*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m21*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m31*((Normal.y*Normal.z*oneminusc) + (sinB*Normal.x)))
+		);
+	Temp.m22 = (
+		(mpout.m12*((Normal.y*Normal.x*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m22*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m33*((Normal.y*Normal.z*oneminusc) + (sinB*Normal.x)))
+		);
+	Temp.m23 = (
+		(mpout.m13*((Normal.y*Normal.x*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m23*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m33*((Normal.y*Normal.z*oneminusc) + (sinB*Normal.x)))
+		);
+	Temp.m24 = (
+		(mpout.m14*((Normal.y*Normal.x*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m24*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m34*((Normal.y*Normal.z*oneminusc) + (sinB*Normal.x)))
+		);
+	Temp.m31 = (
+		(mpout.m11*((Normal.z*Normal.x*oneminusc) + (sinB*Normal.y))) +
+		(mpout.m21*((Normal.z*Normal.y*oneminusc) - (sinB*Normal.x))) +
+		(mpout.m31*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	Temp.m32 = (
+		(mpout.m12*((Normal.z*Normal.x*oneminusc) + (sinB*Normal.y))) +
+		(mpout.m22*((Normal.z*Normal.y*oneminusc) - (sinB*Normal.x))) +
+		(mpout.m32*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	Temp.m33 = (
+		(mpout.m13*((Normal.z*Normal.x*oneminusc) + (sinB*Normal.y))) +
+		(mpout.m23*((Normal.z*Normal.y*oneminusc) - (sinB*Normal.x))) +
+		(mpout.m33*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	Temp.m34 = (
+		(mpout.m14*((Normal.z*Normal.x*oneminusc) + (sinB*Normal.y))) +
+		(mpout.m24*((Normal.z*Normal.y*oneminusc) - (sinB*Normal.x))) +
+		(mpout.m34*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	mpout = Temp;
 }
 void XMatRotationAxisLH(XMATRIX44 &mpout, const XVECTOR3 &A, const float &B) {
+	XMATRIX44 Temp = mpout;
+	XVECTOR3 Normal;
+	float cosB = cos(B);
+	float sinB = sin(B);
+	float oneminusc = (1 - cosB);
+	XVec3Normalize(Normal, A);
+	Temp.m11 = (
+		(mpout.m11*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m21*((Normal.x*Normal.y*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m31*((Normal.x*Normal.z*oneminusc) + (sinB*Normal.y)))
+		);
+	Temp.m12 = (
+		(mpout.m12*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m22*((Normal.x*Normal.y*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m32*((Normal.x*Normal.z*oneminusc) + (sinB*Normal.y)))
+		);
+	Temp.m13 = (
+		(mpout.m13*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m23*((Normal.x*Normal.y*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m33*((Normal.x*Normal.z*oneminusc) + (sinB*Normal.y)))
+		);
+	Temp.m14 = (
+		(mpout.m14*((Normal.x*Normal.x*oneminusc) + cosB)) +
+		(mpout.m24*((Normal.x*Normal.y*oneminusc) - (sinB*Normal.z))) +
+		(mpout.m34*((Normal.x*Normal.z*oneminusc) + (sinB*Normal.y)))
+		);
 
+	Temp.m21 = (
+		(mpout.m11*((Normal.y*Normal.x*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m21*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m31*((Normal.y*Normal.z*oneminusc) - (sinB*Normal.x)))
+		);
+	Temp.m22 = (
+		(mpout.m12*((Normal.y*Normal.x*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m22*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m33*((Normal.y*Normal.z*oneminusc) - (sinB*Normal.x)))
+		);
+	Temp.m23 = (
+		(mpout.m13*((Normal.y*Normal.x*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m23*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m33*((Normal.y*Normal.z*oneminusc) - (sinB*Normal.x)))
+		);
+	Temp.m24 = (
+		(mpout.m14*((Normal.y*Normal.x*oneminusc) + (sinB*Normal.z))) +
+		(mpout.m24*((Normal.y*Normal.y*oneminusc) + cosB)) +
+		(mpout.m34*((Normal.y*Normal.z*oneminusc) - (sinB*Normal.x)))
+		);
+	Temp.m31 = (
+		(mpout.m11*((Normal.z*Normal.x*oneminusc) - (sinB*Normal.y))) +
+		(mpout.m21*((Normal.z*Normal.y*oneminusc) + (sinB*Normal.x))) +
+		(mpout.m31*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	Temp.m32 = (
+		(mpout.m12*((Normal.z*Normal.x*oneminusc) - (sinB*Normal.y))) +
+		(mpout.m22*((Normal.z*Normal.y*oneminusc) + (sinB*Normal.x))) +
+		(mpout.m32*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	Temp.m33 = (
+		(mpout.m13*((Normal.z*Normal.x*oneminusc) - (sinB*Normal.y))) +
+		(mpout.m23*((Normal.z*Normal.y*oneminusc) + (sinB*Normal.x))) +
+		(mpout.m33*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	Temp.m34 = (
+		(mpout.m14*((Normal.z*Normal.x*oneminusc) - (sinB*Normal.y))) +
+		(mpout.m24*((Normal.z*Normal.y*oneminusc) + (sinB*Normal.x))) +
+		(mpout.m34*((Normal.z*Normal.z*oneminusc) + cosB))
+		);
+	mpout = Temp;
 }
 
-void XVecTransformLH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
-
+void XVecTransformLH(XVECTOR3& Transformed, const XVECTOR3& SrcVector, const XMATRIX44& SrcMatrix) {
+	Transformed.x = (SrcMatrix.m11 * SrcVector.x) + (SrcMatrix.m12 * SrcVector.y) + (SrcMatrix.m13 * SrcVector.z) + (SrcMatrix.m14 * SrcVector.w);
+	Transformed.y = (SrcMatrix.m21 * SrcVector.x) + (SrcMatrix.m22 * SrcVector.y) + (SrcMatrix.m23 * SrcVector.z) + (SrcMatrix.m24 * SrcVector.w);
+	Transformed.z = (SrcMatrix.m31 * SrcVector.x) + (SrcMatrix.m32 * SrcVector.y) + (SrcMatrix.m33 * SrcVector.z) + (SrcMatrix.m34 * SrcVector.w);
+	Transformed.w = (SrcMatrix.m41 * SrcVector.x) + (SrcMatrix.m42 * SrcVector.y) + (SrcMatrix.m43 * SrcVector.z) + (SrcMatrix.m44 * SrcVector.w);
 }
-void XVecTransformNormalLH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
-
+void XVecTransformNormalLH(XVECTOR3& Normal, const XVECTOR3& SrcVector, const XMATRIX44& SrcMatrix) {
+	Normal.x = (SrcMatrix.m11 * SrcVector.x) + (SrcMatrix.m12 * SrcVector.y) + (SrcMatrix.m13 * SrcVector.z);
+	Normal.y = (SrcMatrix.m21 * SrcVector.x) + (SrcMatrix.m22 * SrcVector.y) + (SrcMatrix.m23 * SrcVector.z);
+	Normal.z = (SrcMatrix.m31 * SrcVector.x) + (SrcMatrix.m32 * SrcVector.y) + (SrcMatrix.m33 * SrcVector.z);
 }
 
-void XVecTransformRH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
-
+void XVecTransformRH(XVECTOR3& Transformed, const XVECTOR3& SrcVector, const XMATRIX44& SrcMatrix) {
+	Transformed.x = (SrcMatrix.m11 * SrcVector.x) + (SrcMatrix.m12 * SrcVector.y) + (SrcMatrix.m13 * SrcVector.z) + (SrcMatrix.m14 * SrcVector.w);
+	Transformed.y = (SrcMatrix.m21 * SrcVector.x) + (SrcMatrix.m22 * SrcVector.y) + (SrcMatrix.m23 * SrcVector.z) + (SrcMatrix.m24 * SrcVector.w);
+	Transformed.z = -((SrcMatrix.m31 * SrcVector.x) + (SrcMatrix.m32 * SrcVector.y) + (SrcMatrix.m33 * SrcVector.z) + (SrcMatrix.m34 * SrcVector.w));
+	Transformed.w = (SrcMatrix.m41 * SrcVector.x) + (SrcMatrix.m42 * SrcVector.y) + (SrcMatrix.m43 * SrcVector.z) + (SrcMatrix.m44 * SrcVector.w);
 }
-void XVecTransformNormalRH(XVECTOR3 &, const XVECTOR3 &, const XMATRIX44 &) {
-
+void XVecTransformNormalRH(XVECTOR3& Normal, const XVECTOR3& SrcVector, const XMATRIX44& SrcMatrix) {
+	Normal.x = (SrcMatrix.m11 * SrcVector.x) + (SrcMatrix.m12 * SrcVector.y) + (SrcMatrix.m13 * SrcVector.z);
+	Normal.y = (SrcMatrix.m21 * SrcVector.x) + (SrcMatrix.m22 * SrcVector.y) + (SrcMatrix.m23 * SrcVector.z);
+	Normal.z = -((SrcMatrix.m31 * SrcVector.x) + (SrcMatrix.m32 * SrcVector.y) + (SrcMatrix.m33 * SrcVector.z));
 }
 
 void XVecDot(float &vecDot, const XVECTOR3 &A, const XVECTOR3 &B) {

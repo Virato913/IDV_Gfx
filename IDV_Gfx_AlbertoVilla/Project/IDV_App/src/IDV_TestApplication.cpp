@@ -65,5 +65,25 @@ void IDVTestApplication::OnInput() {
 			TimeManager.GetDTSecs();
 			MainCamera.StrafeRight(2.0f);
 		}
+		else if (i == 105 && inputManager.KeyStates[0][i] == true)
+		{
+			TimeManager.GetDTSecs();
+			MainCamera.MovePitch(1.0f);
+		}
+		else if (i == 106 && inputManager.KeyStates[0][i] == true)
+		{
+			TimeManager.GetDTSecs();
+			MainCamera.MoveYaw(-1.0f);
+		}
+		else if (i == 107 && inputManager.KeyStates[0][i] == true)
+		{
+			TimeManager.GetDTSecs();
+			MainCamera.MovePitch(-1.0f);
+		}
+		else if (i == 108 && inputManager.KeyStates[0][i] == true)
+		{
+			TimeManager.GetDTSecs();
+			MainCamera.MoveYaw(1.0f);
+		}
 	}
 }
