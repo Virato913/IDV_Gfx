@@ -1,46 +1,77 @@
 #include <string>
 #include <vector>
+#include <string>
 #ifndef IDV_PARSER
 #define IDV_PARSER
 
 //void PrintFromLibrary();
 
-class Parser {
-public: 
-	struct Coordinates
+class Parser
+{
+public:
+	struct Vertex
 	{
 		float x, y, z, w = 1.0f;
-		float nx, ny, nz, nw = 1.0f;
+		float xn, yn, zn, wn = 1.0f;
 		float u, v;
 	};
-	/*struct Indices
-	{
-		unsigned short x, y, z;
-	};*/
-	/*struct Normals
+
+	struct Index
 	{
 		float x, y, z;
 	};
-	struct TextureCoordinates
+
+	struct MetaObject
 	{
-		float u, v;
-	};*/
-	struct DeclData
-	{
-		float x, y, z;
-		int id;
+		float mx, my, mz;
 	};
-	size_t iFound;
-	char cChar, cInput;
-	int iVertexCount, iIndexCount, iDeclDataCount, iMaterialsCount;
-	std::vector<Coordinates> coords;
-	std::vector<unsigned short> index;
-	std::vector<DeclData> tang;
-	std::vector<DeclData> binomials;
-	std::vector<std::vector<unsigned short>> materials;
-	bool bMeshFound;
-	bool Load(/*std::string fName, *//*std::vector<Coordinates>& coords, std::vector<Indices>& indices*//*, std::vector<Normals*>& normals, std::vector<TextureCoordinates*>& uv*/);
+
+	struct MetaSubset
+	{
+		std::vector<MetaObject> submeta;
+	};
+
+	struct MatSubset
+	{
+		std::vector<unsigned short> mtlBuffer;
+	};
+
+
+	
+	//std::vector<Vertex> vertexVec;
+
+	
+
+
+	
+
+	//std::vector<std::vector<unsigned short>> indexCoordinatesMesh;
+	//std::vector<std::vector<Vertex>> TotalMeshes;
+	//std::vector<MatSubset> totalMeshMaterials;
+	//std::vector<MetaSubset> meshMetaInfo;
+	//std::vector<unsigned short> MaterialType;
+
+	unsigned int meshCount = 0;
+	//unsigned int totalVertex, totalIndexes, totalNormals,  totalMeta, totalMaterials;
+	//unsigned short type, totalMaterialsInMesh;
+
+	struct Mesh
+	{
+		std::vector<unsigned short> indexCoordinatesMesh;
+		std::vector<Vertex> TotalVertex;
+		std::vector<MatSubset> totalMeshMaterials;
+		std::vector<MetaSubset> meshMetaInfo;
+		std::vector<unsigned short> MaterialType;
+		std::vector<std::string> nombresTexturas;
+		unsigned int totalVertex, totalIndexes, totalNormals, totalMeta, totalMaterials, totaltext = 0;
+		unsigned short type, totalMaterialsInMesh;
+	};
+
+	std::vector<Mesh> totalMeshes;
+
+
 	Parser();
+	void CargarVertices();
 };
 
 #endif

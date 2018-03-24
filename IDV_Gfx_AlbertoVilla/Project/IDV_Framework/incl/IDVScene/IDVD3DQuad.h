@@ -14,7 +14,7 @@ using namespace Microsoft::WRL;
 #include <IDVVideo\IDVBaseDriver.h>
 #include <IDVScene\IDVPrimitive.h>
 
-class D3DXQuad : public PrimitiveBase {
+class IDVD3DQuad : public IDVPrimitiveBase {
 public:
 	struct Vert {
 		float x, y, z, w;
@@ -27,7 +27,7 @@ public:
 		D3DXMATRIX WorldView;
 	};
 
-	D3DXQuad() {
+	IDVD3DQuad() {
 
 	}
 
@@ -49,6 +49,9 @@ public:
 	unsigned short	indices[6];
 
 	D3DXMATRIX		transform;
+
+	int			 TexId;
+	Texture		*pTexture;
 };
 
 #endif

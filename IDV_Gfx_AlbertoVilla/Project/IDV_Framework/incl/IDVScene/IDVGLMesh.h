@@ -9,32 +9,40 @@
 
 #include <IDVVideo\IDVBaseDriver.h>
 #include <IDVScene\IDVPrimitive.h>
+#include <IDVParser.h>
+#include <map>
+#include <string>
 
-class GLMesh : public PrimitiveBase {
+class GLMesh : public IDVPrimitiveBase {
 public:
-	struct Vert {
-		float x, y, z, w;
-		float u, v;
+
+	struct SubsetInfo {
+		unsigned int				Id;
+	};
+	struct MeshInfo {
+		unsigned int		VB;
+		unsigned int		IB;
+		std::vector <SubsetInfo>    SubSets;
 	};
 
-	GLMesh() {}
+	GLMesh(){
+	
+	}
 	void Create();
 	void Create(char *) {}
 	void Transform(float *t);
 	void Draw(float *t, float *vp);
 	void Destroy();
-
+	std::vector<MeshInfo>		Mesh_Info;
 	unsigned int	SigBase;
-
-	Vert			vertices[4];
-	unsigned short	indices[6];
 	unsigned int	VB;
 	unsigned int	IB;
-	/*D3DXMATRIX*/XMATRIX44		transform;
+	XMATRIX44		transform;
 
-	Parser Mesh;
-	/*std::vector<Parser::Coordinates*> coords;
-	std::vector<Parser::Indices*> index;*/
+	int			 TexId;
+	Texture		*pTexture;
+	std::map<std::string, Texture*> textureMap;
+	Parser parser;
 };
 
 #endif

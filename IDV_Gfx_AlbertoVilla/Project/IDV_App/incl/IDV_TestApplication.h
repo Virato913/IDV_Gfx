@@ -4,6 +4,8 @@
 #include <IDVBase/IDVCoreBase.h>
 #include <IDVScene/IDVPrimitiveManager.h>
 #include <IDVScene/IDVPrimitiveInstance.h>
+#include <IDVUtils\camera.h>
+#include <IDVUtils\Timer.h>
 
 class IDVTestApplication : public IDVBaseApplication {
 public:
@@ -15,8 +17,15 @@ public:
 	void OnDraw();
 	void OnInput();
 
-	PrimitiveManager *PrimitiveMgr;
-	PrimitiveInst	 QuadInst;
+	Camera MainCamera;
+
+	XMATRIX44 View;
+	XMATRIX44 Projection;
+	XMATRIX44 Camera;
+	Timer TimeManager;
+	IDVPrimitiveManager *PrimitiveMgr;
+	IDVPrimitiveInst	 QuadInst;
+	IDVPrimitiveInst	Models[10];
 };
 
 #endif

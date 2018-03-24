@@ -6,10 +6,9 @@ varying highp vec2 vecUVCoords;
 varying highp vec3 Norm;
 varying highp vec4 Pos;
 
+uniform mediump sampler2D tex0;
+
 void main(){
-	gl_FragColor = vec4(Norm, 1.0f);
+	gl_FragColor = texture2D(tex0,vecUVCoords);
 }
-
-
-
 

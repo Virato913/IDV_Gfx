@@ -8,9 +8,9 @@
 #include <d3dx9math.h>
 #include <IDVMath.h>
 
-class PrimitiveInst {
+class IDVPrimitiveInst {
 	public:
-		void	CreateInstance(PrimitiveBase *pPrim, /*D3DXMATRIX*/XMATRIX44 *pVP) {
+		void	CreateInstance(IDVPrimitiveBase *pPrim, XMATRIX44 *pVP) {
 			pBase = pPrim;
 			pViewProj = pVP;
 			Visible = true;
@@ -37,16 +37,16 @@ class PrimitiveInst {
 		void SetVisible(bool f) { Visible = f; }
 		bool Visible;
 
-		/*D3DXMATRIX*/XMATRIX44		Position;
-		/*D3DXMATRIX*/XMATRIX44		Scale;
-		/*D3DXMATRIX*/XMATRIX44		RotationX;
-		/*D3DXMATRIX*/XMATRIX44		RotationY;
-		/*D3DXMATRIX*/XMATRIX44		RotationZ;
-		/*D3DXMATRIX*/XMATRIX44		Final;
+		XMATRIX44		Position;
+		XMATRIX44		Scale;
+		XMATRIX44		RotationX;
+		XMATRIX44		RotationY;
+		XMATRIX44		RotationZ;
+		XMATRIX44		Final;
 
-		/*D3DXMATRIX*/XMATRIX44		*pViewProj;
+		XMATRIX44		*pViewProj;
 
-		PrimitiveBase	*pBase;
+		IDVPrimitiveBase	*pBase;
 };
 
 

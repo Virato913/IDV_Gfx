@@ -15,18 +15,27 @@ using namespace Microsoft::WRL;
 
 #include <IDVVideo\IDVBaseDriver.h>
 #include <IDVScene\IDVPrimitive.h>
-
-class D3DXMesh : public PrimitiveBase {
+#include<vector>
+#include<map>
+class D3DXMesh : public IDVPrimitiveBase
+{
 public:
-	struct Vert {
-		float x, y, z, w;
-		float u, v;
-	};
 
 	struct CBuffer {
-		/*D3DXMATRIX*/XMATRIX44 WVP;
-		/*D3DXMATRIX*/XMATRIX44 World;
-		/*D3DXMATRIX*/XMATRIX44 WorldView;
+		XMATRIX44 WVP;
+		XMATRIX44 World;
+		XMATRIX44 WorldView;
+	};
+
+	struct SubsetInfo {
+
+		ComPtr<ID3D11Buffer>		IB;
+	};
+
+	struct MeshInfo {
+		ComPtr<ID3D11Buffer>		VB;
+		ComPtr<ID3D11Buffer>		IB;
+		std::vector <SubsetInfo>    SubSets;
 	};
 
 	D3DXMesh() {
@@ -46,15 +55,16 @@ public:
 	ComPtr<ID3D11Buffer>        pd3dConstantBuffer;
 	ComPtr<ID3D11SamplerState>  pSampler;
 
+	std::vector<MeshInfo>		Mesh_Info;
+
 	CBuffer			CnstBuffer;
-	Vert			vertices[4];
-	unsigned short	indices[6];
+	XMATRIX44		transform;
+	Parser parser;
 
-	/*D3DXMATRIX*/XMATRIX44		transform;
-
-	Parser Mesh;
-	/*std::vector<Parser::Coordinates*> coords;
-	std::vector<Parser::Indices*> index;*/
+	int			 TexId;
+	Texture		*pTexture;
+	std::vector<Texture*> textureCollection;
+	std::map<std::string, Texture*> textureMap;
 };
 
 #endif

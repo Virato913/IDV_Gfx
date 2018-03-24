@@ -1,2 +1,11 @@
 ﻿  IDVParser.cpp
-  IDV_Parser.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Lib\Debug\Win32\IDV_Parser.lib
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(46): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(61): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(77): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(100): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(116): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(131): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(148): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(150): warning C4018: '<': signed/unsigned mismatch
+c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_parser\src\idvparser.cpp(180): warning C4018: '<': signed/unsigned mismatch
+  IDV_Parser.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\Mi proyecto\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Lib\Debug\Win32\IDV_Parser.lib
