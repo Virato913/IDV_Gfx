@@ -24,11 +24,12 @@ struct VS_OUTPUT {
 
 VS_OUTPUT VS(VS_INPUT input) {
 	VS_OUTPUT OUT;
+	float3x3 WorldRot = (float3x3)World;
 	OUT.hposition = mul(WVP, input.position);
 	OUT.wposition = mul(World, input.position);
-	OUT.hnormal = float4(mul(World, input.normal));
-	OUT.htangent = float4(mul(World, input.tangent));
-	OUT.hbinormal = float4(mul(World, input.binormal));
+	OUT.hnormal = float4(mul(WorldRot, input.normal.xyz), 1.0);
+	OUT.htangent = float4(mul(WorldRot, input.tangent.xyz), 1.0);
+	OUT.hbinormal = float4(mul(WorldRot, input.binormal.xyz), 1.0);
 	OUT.texture0 = input.texture0;
 	return OUT;
 }

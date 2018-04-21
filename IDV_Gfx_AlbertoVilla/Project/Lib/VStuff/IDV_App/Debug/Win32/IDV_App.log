@@ -1,9 +1,2 @@
-﻿  IDV_TestApplication.cpp
-c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_app\src\idv_testapplication.cpp(96): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_app\src\idv_testapplication.cpp(99): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_app\src\idv_testapplication.cpp(102): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_app\src\idv_testapplication.cpp(105): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_app\src\idv_testapplication.cpp(108): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-c:\users\alumno14\desktop\weas de gráficas\mi proyecto\idv_gfx\idv_gfx_albertovilla\project\idv_app\src\idv_testapplication.cpp(111): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-  IDV_App.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\Mi proyecto\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Bin\IDV_App.exe
+﻿  IDV_App.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\Mi proyecto\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Bin\IDV_App.exe
   IDV_App.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\Mi proyecto\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Bin\IDV_App.pdb (Partial PDB)
