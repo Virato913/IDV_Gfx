@@ -4,9 +4,8 @@
 
 #include <IDVScene/IDVPrimitive.h>
 #include <IDVVideo/IDVBaseDriver.h>
-
-#include <d3dx9math.h>
 #include <IDVMath.h>
+#include <d3dx9math.h>
 
 class IDVPrimitiveInst {
 	public:
@@ -43,7 +42,7 @@ class IDVPrimitiveInst {
 		XMATRIX44		RotationY;
 		XMATRIX44		RotationZ;
 		XMATRIX44		Final;
-
+		
 		XMATRIX44		*pViewProj;
 
 		IDVPrimitiveBase	*pBase;

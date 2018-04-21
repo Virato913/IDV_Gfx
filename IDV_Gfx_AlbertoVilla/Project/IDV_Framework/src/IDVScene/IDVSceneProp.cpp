@@ -1,13 +1,16 @@
 #include <IDVScene/IDVSceneProp.h>
 
-void	IDVSceneProps::AddLight(/*D3DXVECTOR3*/XVECTOR3 Pos, /*D3DXVECTOR3*/XVECTOR3 Color, bool enabled){
+void	IDVSceneProps::AddLight(XVECTOR3 Pos, XVECTOR3 Color, bool enabled){
 	IDVLight l;
 	l.Position=Pos;
-	l.Color=Color;
+	l.Color = Color;
 	l.Enabled=(int)enabled;
 	Lights.push_back(l);
 }
-
+void	IDVSceneProps::AddCamera(Camera* cam)
+{
+	pCameras.push_back(cam);
+}
 void	IDVSceneProps::RemoveLight(unsigned int index){
 	if(index < 0 || index >= Lights.size())
 		return;
@@ -15,7 +18,7 @@ void	IDVSceneProps::RemoveLight(unsigned int index){
 	Lights.erase(Lights.begin() + index);
 }
 
-void	IDVSceneProps::SetLightPos(unsigned int index, /*D3DXVECTOR3*/XVECTOR3 pos){
+void	IDVSceneProps::SetLightPos(unsigned int index, XVECTOR3 pos){
 	if (index < 0 || index >= Lights.size())
 		return;
 

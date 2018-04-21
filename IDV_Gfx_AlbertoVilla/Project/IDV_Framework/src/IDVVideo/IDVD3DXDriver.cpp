@@ -115,7 +115,7 @@ void IDVD3DXDriver::InitDriver(){
 	rasterizerState.MultisampleEnable = false;
 	rasterizerState.AntialiasedLineEnable = false;
 
-	D3D11Device->CreateRasterizerState(&rasterizerState, &D3D11RasterizerState);
+	D3D11Device->CreateRasterizerState(&rasterizerState,&D3D11RasterizerState);
 
 	D3D11DeviceContext->RSSetState(D3D11RasterizerState.Get());
 }

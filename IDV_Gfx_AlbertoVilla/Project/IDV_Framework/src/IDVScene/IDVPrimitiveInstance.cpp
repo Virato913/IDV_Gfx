@@ -1,28 +1,30 @@
 #include <IDVScene/IDVPrimitiveInstance.h>
-
 #include <IDVMath.h>
-
-void IDVPrimitiveInst::TranslateAbsolute(float x, float y, float z) {
+void IDVPrimitiveInst::TranslateAbsolute(float x, float y, float z){
 	XMatTranslation(Position, x, y, z);
 	//D3DXMatrixTranslation(&Position, x, y, z);
 }
 
 void IDVPrimitiveInst::RotateXAbsolute(float ang) {
+	RotationX.Identity();
 	XMatRotationXLH(RotationX, Deg2Rad(ang));
 	//D3DXMatrixRotationX(&RotationX, D3DXToRadian(ang));
 }
 
 void IDVPrimitiveInst::RotateYAbsolute(float ang) {
+	RotationY.Identity();
 	XMatRotationYLH(RotationY, Deg2Rad(ang));
 	//D3DXMatrixRotationY(&RotationY, D3DXToRadian(ang));
 }
 
 void IDVPrimitiveInst::RotateZAbsolute(float ang) {
+	RotationZ.Identity();
 	XMatRotationZLH(RotationZ, Deg2Rad(ang));
 	//D3DXMatrixRotationZ(&RotationZ, D3DXToRadian(ang));
 }
 
 void IDVPrimitiveInst::ScaleAbsolute(float sc) {
+	Scale.Identity();
 	XMatScaling(Scale, sc, sc, sc);
 	//D3DXMatrixScaling(&Scale,sc,sc,sc);
 }
@@ -63,15 +65,15 @@ void IDVPrimitiveInst::ScaleRelative(float sc) {
 }
 
 void IDVPrimitiveInst::Update() {
-	Final = Scale * RotationX*RotationY*RotationZ*Position;
+	Final = Scale*RotationX*RotationY*RotationZ*Position;
 }
 
-void IDVPrimitiveInst::Draw() {
+void IDVPrimitiveInst::Draw(){
 	if (!Visible)
 		return;
-	pBase->Draw(&Final.m[0][0], &pViewProj->m[0][0]);
+	pBase->Draw(&Final.m[0][0],&pViewProj->m[0][0]);
 }
 
-void IDVPrimitiveInst::SetSignature(unsigned int f) {
+void IDVPrimitiveInst::SetSignature(unsigned int f){
 	pBase->SetGlobalSignature(f);
 }

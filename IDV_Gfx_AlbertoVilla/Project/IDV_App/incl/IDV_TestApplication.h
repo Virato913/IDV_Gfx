@@ -1,12 +1,12 @@
 #ifndef IDV_TEST_APPLICATION
 #define IDV_TEST_APPLICATION
-
+#include <IDVMath.h>
 #include <IDVBase/IDVCoreBase.h>
 #include <IDVScene/IDVPrimitiveManager.h>
+#include <IDVScene/IDVSceneProp.h>
 #include <IDVScene/IDVPrimitiveInstance.h>
-#include <IDVUtils\camera.h>
-#include <IDVUtils\Timer.h>
-
+#include <IDVUtils/Camera.h>
+#include <IDVUtils/Timer.h>
 class IDVTestApplication : public IDVBaseApplication {
 public:
 	IDVTestApplication() : IDVBaseApplication() {}
@@ -17,15 +17,20 @@ public:
 	void OnDraw();
 	void OnInput();
 
-	Camera MainCamera;
-
+	IDVPrimitiveManager *IDVPrimitiveMgr;
+	IDVPrimitiveInst	 QuadInst;
+	IDVPrimitiveInst	Mesh[10];
+	Camera mainCamera;
+	Camera* activeCamera;
+	IDVLight *Light;
+	IDVSceneProps sceneProp;
 	XMATRIX44 View;
 	XMATRIX44 Projection;
 	XMATRIX44 Camera;
 	Timer TimeManager;
-	IDVPrimitiveManager *PrimitiveMgr;
-	IDVPrimitiveInst	 QuadInst;
-	IDVPrimitiveInst	Models[10];
+	float deltaTime;
+	bool firstFrame;
+	int instancesInScene;
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef IDV_QUAD_D3D_H
 #define IDV_QUAD_D3D_H
 
-#include <d3dx9math.h>
+//#include <d3dx9math.h>
 
 #include <wrl.h>
 #include <wrl/client.h>
@@ -10,7 +10,7 @@ using namespace Microsoft::WRL;
 #include <d3d11.h>
 #include <dxgi.h>
 #include <D3Dcompiler.h>
-
+#include <IDVMath.h>
 #include <IDVVideo\IDVBaseDriver.h>
 #include <IDVScene\IDVPrimitive.h>
 
@@ -22,9 +22,9 @@ public:
 	};
 
 	struct CBuffer {
-		D3DXMATRIX WVP;
-		D3DXMATRIX World;
-		D3DXMATRIX WorldView;
+			XMATRIX44 WVP;
+			XMATRIX44 World;
+			XMATRIX44 WorldView;
 	};
 
 	IDVD3DQuad() {
@@ -32,6 +32,7 @@ public:
 	}
 
 	void Create();
+	inline void Create(std::string) {};
 	void Create(char *) {}
 	void Transform(float *t);
 	void Draw(float *t, float *vp);
@@ -48,8 +49,7 @@ public:
 	Vert			vertices[4];
 	unsigned short	indices[6];
 
-	D3DXMATRIX		transform;
-
+	XMATRIX44		transform;
 	int			 TexId;
 	Texture		*pTexture;
 };

@@ -2,7 +2,7 @@
 #include <IDVVideo/IDVGLTexture.h>
 #include <IDVScene/IDVGLQuad.h>
 #include <IDVUtils/IDVUtils.h>
-
+#include <IDVMath.h>
 void IDVGLQuad::Create(){
 
 	pTexture = new GLTexture;
@@ -12,7 +12,6 @@ void IDVGLQuad::Create(){
 	if (TexId == -1) {
 		delete pTexture;
 	}
-
 	SigBase = IDVSig::HAS_TEXCOORDS0;
 
 	char *vsSourceP = file2string("Shaders/VS_Quad.glsl");
@@ -63,8 +62,8 @@ void IDVGLQuad::Draw(float *t, float *vp){
 	sig |= gSig;
 	IDVGLShader * s = dynamic_cast<IDVGLShader*>(g_pBaseDriver->GetShaderSig(sig));
 
-	D3DXMATRIX VP = vp;
-	D3DXMATRIX WV = vp;
+	XMATRIX44 VP = vp;
+	XMATRIX44 WV = vp;
 	
 	glUseProgram(s->ShaderProg);
 

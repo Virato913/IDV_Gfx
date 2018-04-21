@@ -4,12 +4,9 @@
 #include <IDVVideo/IDVGLTexture.h>
 #include <IDVMath.h>
 #include <string>
-
-void GLMesh::Create() {
-
-
-	SigBase = IDVSig::HAS_TEXCOORDS0 | IDVSig::HAS_NORMALS | IDVSig::HAS_TANGENTS | IDVSig::HAS_BINORMALS;
-
+void GLMesh::Create(std::string link) {
+	
+	SigBase = IDVSig::HAS_TEXCOORDS0 | IDVSig::HAS_NORMALS;
 	char *vsSourceP = file2string("Shaders/VS_Mesh.glsl");
 	char *fsSourceP = file2string("Shaders/FS_Mesh.glsl");
 
@@ -18,66 +15,67 @@ void GLMesh::Create() {
 
 	free(vsSourceP);
 	free(fsSourceP);
-
-	parser.CargarVertices();
-	Mesh_Info.reserve(parser.meshCount);
-
-	for (int i = 0; i < parser.meshCount; i++)
+	
+	
+	MeshParser.Load(link);
+	Mesh_Info.reserve(MeshParser.meshCount);
+	for (int i = 0; i < MeshParser.meshCount; i++)
 	{
-		MeshInfo tempMesh;
-		Parser::Mesh mesh = parser.totalMeshes[i];
-
+		Parser::mesh pactual = MeshParser.meshesTotal[i];
+		MeshInfo tmp;
 		g_pBaseDriver->CreateShader(vstr, fstr, SigBase);
-		
-		glGenBuffers(1, &tempMesh.VB);
-		glBindBuffer(GL_ARRAY_BUFFER, tempMesh.VB);
-		glBufferData(GL_ARRAY_BUFFER, mesh.totalVertex * sizeof(Parser::Vertex), &mesh.TotalVertex[0], GL_STATIC_DRAW);
+		glGenBuffers(1, &tmp.VB);
+		glBindBuffer(GL_ARRAY_BUFFER, tmp.VB);
+		glBufferData(
+			GL_ARRAY_BUFFER, 
+			pactual.vertexCount *sizeof(Parser::vertex), 
+			&pactual.MeshVec[0] , 
+			GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		glGenBuffers(1, &tempMesh.IB);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempMesh.IB);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indexCoordinatesMesh.size() * sizeof(unsigned short), &mesh.indexCoordinatesMesh[0], GL_STATIC_DRAW);
+		glGenBuffers(1, &tmp.IB);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tmp.IB);
+		glBufferData(
+			GL_ELEMENT_ARRAY_BUFFER, 
+			pactual.MeshIndex.size() * sizeof(unsigned short),
+			&pactual.MeshIndex[0],
+			GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		for (int x = 0; x < mesh.totaltext; x++)
+		for (int j = 0; j < pactual.matInMesh; j++)
 		{
+			SubsetInfo tmp_subset;
+			//texture
 			pTexture = new GLTexture;
-
-			TexId = pTexture->LoadTexture(mesh.nombresTexturas[x].c_str());
-
+			TexId = pTexture->LoadTexture(pactual.txtbuffer[j].c_str());
 			if (TexId == -1) {
 				delete pTexture;
 			}
-		}
-
-		for (int j = 0; j < mesh.totalMaterialsInMesh; j++)
-		{
-			SubsetInfo tmp_subset;
+			else
+				textureBuffer.insert(std::make_pair(pactual.txtbuffer[j], (pTexture)));//
+			//normal
+			pNormal = new GLTexture;
+			TexId = pNormal->LoadTexture(pactual.nrmFileBuffer[j].c_str());
+			if (TexId == -1) {
+				delete pNormal;
+			}
+			else
+				normalBuffer.insert(std::make_pair(pactual.nrmFileBuffer[j], (pNormal)));//
 			glGenBuffers(1, &tmp_subset.Id);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tmp_subset.Id);
 			glBufferData(
 				GL_ELEMENT_ARRAY_BUFFER,
-				mesh.totalMeshMaterials[j].mtlBuffer.size() * sizeof(unsigned short),
-				&mesh.totalMeshMaterials[j].mtlBuffer[0],
+				pactual.MeshMat[j].materialset.size() * sizeof(unsigned short),
+				&pactual.MeshMat[j].materialset[0],
 				GL_STATIC_DRAW);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-			pTexture = new GLTexture;
-
-			TexId = pTexture->LoadTexture(mesh.nombresTexturas[j].c_str());
-
-			if (TexId == -1) {
-				delete pTexture;
-			}
-
-
-			tempMesh.SubSets.push_back(tmp_subset);
-			textureMap.insert(std::make_pair(mesh.nombresTexturas[j], (pTexture)));
-
+			tmp.SubSets.push_back(tmp_subset);
+			
+			
 		}
-		Mesh_Info.push_back(tempMesh);
-
+		Mesh_Info.push_back(tmp);
 	}
+
 }
 
 void GLMesh::Transform(float *t) {
@@ -88,65 +86,77 @@ void GLMesh::Draw(float *t, float *vp) {
 
 	if (t)
 		transform = t;
-
-	for (int i = 0; i < parser.meshCount; i++)
+	
+	for (int i = 0; i < MeshParser.meshCount; i++)
 	{
 		MeshInfo drawinfo = Mesh_Info[i];
-		Parser::Mesh mesh = parser.totalMeshes[i];
+		Parser::mesh pactual = MeshParser.meshesTotal[i];
+		XMATRIX44 World = static_cast<XMATRIX44>(t);
+		XMATRIX44 VP = static_cast<XMATRIX44>(vp);
 
-		
-		IDVGLShader * s=0;
-		XMATRIX44 Scale;
-		XMATRIX44 View;
-		XMATRIX44 Projection;
-		/*XMatViewLookAtLH(View, XVECTOR3(0.0f, 20.0f, 0.0f), XVECTOR3(0.0f, 10.0f, 1.0f), XVECTOR3(0.0f, 100.0f, 0.0f));
-		XMatPerspectiveLH(Projection, Deg2Rad(100.0f), 1280.0f / 720.0f, 0.1f, 1000.0f);
-		XMatScaling(Scale, 1.0f, 1.0f, 1.0f);*/
+		XMATRIX44 WV = transform;
+		XMATRIX44 WVP = World*VP;
 
-		XMatViewLookAtLH(View, XVECTOR3(0.0f, -1.0f, -10.0f), XVECTOR3(0.0f, 10.0f, 1.0f), XVECTOR3(0.0f, 100.0f, 0.0f));
-		XMatPerspectiveLH(Projection, Deg2Rad(100.0f), 1280.0f / 720.0f, 0.1f, 1000.0f);
-		XMatScaling(Scale, 0.5f, 0.5f, 0.5f);
 
-		XMATRIX44 VP = vp;
-		XMATRIX44 WV = vp;
-		XMATRIX44 WVP = Scale*View*Projection;
-		
 		unsigned int sig = SigBase;
 		sig |= gSig;
-
+		IDVGLShader * s = 0;
+		
 		glBindBuffer(GL_ARRAY_BUFFER, drawinfo.VB);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, drawinfo.IB);
-
-		for (int j = 0; j < drawinfo.SubSets.size(); j++)
+	
+		for (unsigned int j = 0; j < drawinfo.SubSets.size(); j++)
 		{
 			SubsetInfo subinfo = drawinfo.SubSets[j];
 			s = dynamic_cast<IDVGLShader*>(g_pBaseDriver->GetShaderSig(sig));
+						
 			glUseProgram(s->ShaderProg);
 
+			if (s->LightPositions_Loc != -1) {
+				glUniform4fv(s->LightPositions_Loc, 1, &pScProp->Lights[0].Position.v[0]);
+			}
+			
 			glUniformMatrix4fv(s->matWorldUniformLoc, 1, GL_FALSE, &transform.m[0][0]);
 			glUniformMatrix4fv(s->matWorldViewProjUniformLoc, 1, GL_FALSE, &WVP.m[0][0]);
 			glUniformMatrix4fv(s->matWorldViewUniformLoc, 1, GL_FALSE, &WV.m[0][0]);
 
-
-			GLTexture *texgl = dynamic_cast<GLTexture*>(this->textureMap.find(mesh.nombresTexturas[j])->second);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, texgl->id);
-			glUniform1i(s->DiffuseTex_loc, 0);
-
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, subinfo.Id);
 
-			glEnableVertexAttribArray(s->vertexAttribLoc);
-			glVertexAttribPointer(s->vertexAttribLoc, 4, GL_FLOAT, GL_FALSE, sizeof(Parser::Vertex), BUFFER_OFFSET(0));
-			glEnableVertexAttribArray(s->normalAttribLoc);
-			glVertexAttribPointer(s->normalAttribLoc, 4, GL_FLOAT, GL_FALSE, sizeof(Parser::Vertex), BUFFER_OFFSET(16));
-			glEnableVertexAttribArray(s->uvAttribLoc);
-			glVertexAttribPointer(s->uvAttribLoc, 2, GL_FLOAT, GL_FALSE, sizeof(Parser::Vertex), BUFFER_OFFSET(32));
+			auto it = this->textureBuffer.find(pactual.txtbuffer[j]);
+			if (it != textureBuffer.end()||it->first.size()>3)
+			{
+				GLTexture *texgl = dynamic_cast<GLTexture*>(it->second);
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, texgl->id);
+				glUniform1i(s->tex0_loc, 0);
+			}
+			
+			auto nm = this->normalBuffer.find(pactual.nrmFileBuffer[j]);
+			if (it != textureBuffer.end() || it->first.size()>3)
+			{
+				GLTexture *nrmgl = dynamic_cast<GLTexture*>(nm->second);
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, nrmgl->id);
+				glUniform1i(s->tex1_loc, 1);
+			}
+			
 
-			glDrawElements(GL_TRIANGLES, mesh.totalMeshMaterials[j].mtlBuffer.size(), GL_UNSIGNED_SHORT, 0);
+			glEnableVertexAttribArray(s->vertexAttribLoc);
+			glVertexAttribPointer(s->vertexAttribLoc, 4, GL_FLOAT, GL_FALSE, sizeof(Parser::vertex), BUFFER_OFFSET(0));
+			glEnableVertexAttribArray(s->normalAttribLoc);
+			glVertexAttribPointer(s->normalAttribLoc, 4, GL_FLOAT, GL_FALSE, sizeof(Parser::vertex), BUFFER_OFFSET(16));
+			glEnableVertexAttribArray(s->tangentAttribLoc);
+			glVertexAttribPointer(s->tangentAttribLoc, 4, GL_FLOAT, GL_FALSE, sizeof(Parser::vertex), BUFFER_OFFSET(32));
+			glEnableVertexAttribArray(s->binormalAttribLoc);
+			glVertexAttribPointer(s->binormalAttribLoc, 4, GL_FLOAT, GL_FALSE, sizeof(Parser::vertex), BUFFER_OFFSET(48));
+			glEnableVertexAttribArray(s->uvAttribLoc);
+			glVertexAttribPointer(s->uvAttribLoc, 2, GL_FLOAT, GL_FALSE, sizeof(Parser::vertex), BUFFER_OFFSET(64));
+			
+			glDrawElements(GL_TRIANGLES, pactual.MeshMat[j].materialset.size(), GL_UNSIGNED_SHORT, 0);
 		}
+		
 	}
 }
 
-void GLMesh::Destroy() {
+void GLMesh::Destroy(){
 
 }

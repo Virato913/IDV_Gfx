@@ -1,16 +1,12 @@
-#ifndef T800_CAMERA_H
-#define T800_CAMERA_H
-
-//#include <Config.h>
-
+#ifndef IDV_CAMERA_H
+#define IDV_CAMERA_H
 #include <IDVMath.h>
-
-
+#include <IDVUtils/Timer.h>
 class Camera {
 public:
 	Camera();
 
-	void	Init(XVECTOR3 position,float fov,float ratio,float np,float fp,bool lf=true);
+	void	Init(XVECTOR3 position, float fov, float ratio, float np, float fp, bool lf = true);
 	void	CreatePojection();
 
 	void	SetLookAt(XVECTOR3 v);
@@ -19,7 +15,12 @@ public:
 	void	MoveBackward(float dt);
 	void	StrafeLeft(float dt);
 	void	StrafeRight(float dt);
-
+	void	MoveUp(float dt);
+	void	MoveDown(float dt);
+	void	TurnLeft(float dt);
+	void	TurnRight(float dt);
+	void	TurnUp(float dt);
+	void	TurnDown(float dt);
 	void	MoveYaw(float f);
 	void	MovePitch(float f);
 	void	MoveRoll(float f);
@@ -53,7 +54,7 @@ public:
 	XVECTOR3	Look;
 	XVECTOR3	Right;
 	XVECTOR3	Up;
-
+	XVECTOR3	LookAt;
 	XVECTOR3	Velocity;
 
 	XMATRIX44	Position;

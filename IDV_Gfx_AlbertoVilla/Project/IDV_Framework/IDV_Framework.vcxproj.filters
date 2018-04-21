@@ -96,7 +96,7 @@
     <ClCompile Include="src\IDVUtils\Timer.cpp">
       <Filter>Source Files\IDVUtils</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
+    <ClCompile Include="src\IDVUtils\camera.cpp">
       <Filter>Source Files\IDVUtils</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,8 +3,6 @@
 
 #include <IDVDefs.h>
 #include <IDVBase/IDVCoreBase.h>
-#include <IDVUtils\Camera.h>
-#include <IDVUtils\InputManager.h>
 
 class IDVWin32Manager : public IDVBaseWindow {
 public:
@@ -18,9 +16,6 @@ public:
 	void OnDestroyApplication();
 	void UpdateApplication();
 	void ProcessInput();
-
-	InputManager inputManager;
-	//Camera MainCamera;
 };
 
 

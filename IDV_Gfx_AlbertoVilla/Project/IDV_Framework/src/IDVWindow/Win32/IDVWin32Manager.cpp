@@ -8,7 +8,6 @@
 // Windows
 #include <windows.h>
 #include <mmsystem.h>
-
 void IDVWin32Manager::InitGlobalVars() {
 	m_pApplication->InitVars();
 }
@@ -24,11 +23,9 @@ void IDVWin32Manager::OnCreateApplication() {
 	if (SDL_SetVideoMode(1280, height, 32, SDL_HWSURFACE | SDL_OPENGL | SDL_RESIZABLE) == 0) {
 		printf("Video mode set failed: %s\n", SDL_GetError());
 	}
+	m_pVideoDriver = new IDVGLDriver();
+//	m_pVideoDriver = new IDVD3DXDriver();
 
-
-//	m_pVideoDriver = new IDVGLDriver();
-
-	m_pVideoDriver = new IDVD3DXDriver();
 	m_pVideoDriver->SetDimensions(width, height);
 
 	m_pVideoDriver->SetWindow(0);
@@ -58,88 +55,24 @@ void IDVWin32Manager::ProcessInput() {
 	SDL_Event       evento;
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
-		case SDL_KEYDOWN: {
-			if (evento.key.keysym.sym == SDLK_q) {
+		case SDL_KEYDOWN: 
+		{
+			if (evento.key.keysym.sym == SDLK_ESCAPE) 
+			{
 				m_bAlive = false;
 			}
-			else if (evento.key.keysym.sym == SDLK_w)
-			{
-				m_pApplication->inputManager.KeyStates[0][119] = true;
-			}
-			else if (evento.key.keysym.sym == SDLK_a)
-			{
-				m_pApplication->inputManager.KeyStates[0][97] = true;
-			}
-			else if (evento.key.keysym.sym == SDLK_s)
-			{
-				m_pApplication->inputManager.KeyStates[0][115] = true;
-			}
-			else if (evento.key.keysym.sym == SDLK_d)
-			{
-				m_pApplication->inputManager.KeyStates[0][100] = true;
-
-			}
-			else if (evento.key.keysym.sym == SDLK_i)
-			{
-				m_pApplication->inputManager.KeyStates[0][105] = true;
-			}
-			else if (evento.key.keysym.sym == SDLK_j)
-			{
-				m_pApplication->inputManager.KeyStates[0][106] = true;
-			}
-			else if (evento.key.keysym.sym == SDLK_k)
-			{
-				m_pApplication->inputManager.KeyStates[0][107] = true;
-			}
-			else if (evento.key.keysym.sym == SDLK_l)
-			{
-				m_pApplication->inputManager.KeyStates[0][108] = true;
-
-			}
-
-		}break;
-
+			m_pApplication->iManager.KeyStates[0][evento.key.keysym.sym] = true;
+		}
+		break;
 		case SDL_QUIT: {
 			m_bAlive = false;
 		}break;
-
-		case SDL_KEYUP: {
-			if (evento.key.keysym.sym == SDLK_w)
-			{
-				m_pApplication->inputManager.KeyStates[0][119] = false;
-				//printf("stopping front");
-			}
-			else if (evento.key.keysym.sym == SDLK_a)
-			{
-				m_pApplication->inputManager.KeyStates[0][97] = false;
-			}
-			else if (evento.key.keysym.sym == SDLK_s)
-			{
-				m_pApplication->inputManager.KeyStates[0][115] = false;
-			}
-			else if (evento.key.keysym.sym == SDLK_d)
-			{
-				m_pApplication->inputManager.KeyStates[0][100] = false;
-
-			}
-			else if (evento.key.keysym.sym == SDLK_i)
-			{
-				m_pApplication->inputManager.KeyStates[0][105] = false;
-			}
-			else if (evento.key.keysym.sym == SDLK_j)
-			{
-				m_pApplication->inputManager.KeyStates[0][106] = false;
-			}
-			else if (evento.key.keysym.sym == SDLK_k)
-			{
-				m_pApplication->inputManager.KeyStates[0][107] = false;
-			}
-			else if (evento.key.keysym.sym == SDLK_l)
-			{
-				m_pApplication->inputManager.KeyStates[0][108] = false;
-
-			}
-		}break;
+		case SDL_KEYUP: 
+		{
+			m_pApplication->iManager.KeyStates[0][evento.key.keysym.sym] = false;
+			m_pApplication->iManager.KeyStates[1][evento.key.keysym.sym] = false;
+		}
+		break;
 
 		case SDL_VIDEORESIZE: {
 			printf("New dim %d x %d \n", evento.resize.w, evento.resize.h);
@@ -148,4 +81,17 @@ void IDVWin32Manager::ProcessInput() {
 
 		}
 	}
+	static int xDelta = 0;
+	static int yDelta = 0;
+	int x = 0, y = 0;
+
+	SDL_GetMouseState(&x, &y);
+	xDelta = x - xDelta;
+	yDelta = y - yDelta;
+
+	m_pApplication->iManager.xDelta = xDelta;
+	m_pApplication->iManager.yDelta = yDelta;
+
+	xDelta = x;
+	yDelta = y;
 }

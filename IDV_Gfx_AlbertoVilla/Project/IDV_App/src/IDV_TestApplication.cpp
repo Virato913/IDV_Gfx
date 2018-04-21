@@ -1,89 +1,116 @@
 #include <IDV_TestApplication.h>
-
 #include <stdio.h>
 #include <IDVMath.h>
-#include <IDVUtils\Timer.h>
-
-
-
-void IDVTestApplication::InitVars() {
-	MainCamera.Init(XVECTOR3(0.0f, 1.0f, -10.0f), Deg2Rad(100.0f), (16.0f / 9.0f), 0.1f, 10000, 1);
+#include <IDVUtils/Timer.h>
+void IDVTestApplication::InitVars() 
+{
 	TimeManager.Init();
+	TimeManager.Update();
+	srand((unsigned int)TimeManager.GetDTSecs());
+	mainCamera.Init(XVECTOR3(0.0f, 1.0f, -10.0f), Deg2Rad(90.0f), (16.0f / 9.0f), 0.1f, 100000, 1);
+	mainCamera.Update(0.0f);
+	activeCamera = &mainCamera;
+	sceneProp.AddCamera(activeCamera);
+	sceneProp.AddLight(XVECTOR3(0.0f, 1.0f, -8.0f), XVECTOR3(1.0f, 1.0f, 1.0f), true);
+	Light = &sceneProp.Lights[0];
+	firstFrame = true;
 }
 
 void IDVTestApplication::CreateAssets() {
-	/*D3DXMATRIX*/XMATRIX44 VP;
-
-	PrimitiveMgr = new IDVPrimitiveManager(m_pWindow->m_pVideoDriver->SelectedApi);
-
-	//int index = PrimitiveMgr->CreateQuad();
-	int index = PrimitiveMgr->CreateMesh();
+	IDVPrimitiveMgr = new IDVPrimitiveManager(m_pWindow->m_pVideoDriver->SelectedApi);
 	
-	//for(int i = 0; i <  ; i++ )
-	int i = 0;
-	Models[i].CreateInstance(PrimitiveMgr->GetPrimitive(index), &MainCamera.VP);
+	std::string alfa = "Models/Scene.X ";
+	int index = IDVPrimitiveMgr->CreateMesh(alfa,&sceneProp);
+	Mesh[0].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
+	instancesInScene++;
+	alfa = "Models/CerdoNuevo.X ";
+	index = IDVPrimitiveMgr->CreateMesh(alfa,&sceneProp);
+	Mesh[1].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
+	instancesInScene++;
+	IDVPrimitiveMgr->SetSceneProps(&sceneProp);
 }
 
 void IDVTestApplication::DestroyAssets() {
-	delete PrimitiveMgr;
+	delete IDVPrimitiveMgr;
 }
 
 void IDVTestApplication::OnUpdate() {
+	
+	TimeManager.Update();
+	deltaTime = TimeManager.GetDTSecs();
+	OnInput();
 
+	Mesh[1].ScaleAbsolute(4.0f);
+	Mesh[1].RotateXAbsolute(0.0f);
+	Mesh[1].RotateZAbsolute(90.0f);
+	Mesh[1].RotateYAbsolute(90.0f);
+	Mesh[1].Update();
+	activeCamera->Update(deltaTime);
 	OnDraw();
-	MainCamera.Update(1.0f);
 }
 
 void IDVTestApplication::OnDraw(){
 	m_pWindow->m_pVideoDriver->Clear();
-
-	Models[0].Draw();
-
+	for (int i = 0; i < instancesInScene; i++)
+	{
+		Mesh[i].Draw();
+	}
 	m_pWindow->m_pVideoDriver->SwapBuffers();
+	firstFrame = false;
 }
 
 void IDVTestApplication::OnInput() {
-	for (int i = 0; i< MAXKEYS; i++)
-	{
-		if (i == 119 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.MoveForward(2.0f);
-		}
-		else if (i == 97 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.StrafeLeft(2.0f);
-		}
-		else if (i == 115 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.MoveBackward(2.0f);
-		}
-		else if (i == 100 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.StrafeRight(2.0f);
-		}
-		else if (i == 105 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.MovePitch(1.0f);
-		}
-		else if (i == 106 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.MoveYaw(-1.0f);
-		}
-		else if (i == 107 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.MovePitch(-1.0f);
-		}
-		else if (i == 108 && inputManager.KeyStates[0][i] == true)
-		{
-			TimeManager.GetDTSecs();
-			MainCamera.MoveYaw(1.0f);
-		}
-	}
+	if (iManager.PressedKey(T800K_w))
+		activeCamera->MoveForward(deltaTime);
+	
+
+	if (iManager.PressedKey(T800K_s)) 
+		activeCamera->MoveBackward(deltaTime);
+
+	if (iManager.PressedKey(T800K_a))
+		activeCamera->StrafeLeft(deltaTime);
+
+	if (iManager.PressedKey(T800K_d))
+		activeCamera->StrafeRight(deltaTime);
+
+	if (iManager.PressedKey(T800K_q))
+		activeCamera->MoveUp(deltaTime);
+
+	if (iManager.PressedKey(T800K_e))
+		activeCamera->MoveDown(deltaTime);
+
+	if (iManager.PressedKey(T800K_l))
+		activeCamera->TurnRight(deltaTime);
+
+	if (iManager.PressedKey(T800K_j))
+		activeCamera->TurnLeft(deltaTime);
+
+	if (iManager.PressedKey(T800K_i))
+		activeCamera->TurnUp(deltaTime);
+
+	if (iManager.PressedKey(T800K_k))
+		activeCamera->TurnDown(deltaTime);
+
+
+	if (iManager.PressedKey(T800K_UP))
+		Light->Position.y += 10.0 * deltaTime;
+
+	if (iManager.PressedKey(T800K_DOWN))
+		Light->Position.y -= 10.0 * deltaTime;
+
+	if (iManager.PressedKey(T800K_LEFT))
+		Light->Position.x -= 10.0 * deltaTime;
+
+	if (iManager.PressedKey(T800K_RIGHT))
+		Light->Position.x += 10.0 * deltaTime;
+
+	if (iManager.PressedKey(T800K_KP1))
+		Light->Position.z -= 10.0 * deltaTime;
+
+	if (iManager.PressedKey(T800K_KP2))
+		Light->Position.z += 10.0 * deltaTime;
+	float yaw = 0.01f*static_cast<float>(iManager.xDelta);
+	float pitch = 0.01f*static_cast<float>(iManager.yDelta);
+	activeCamera->MovePitch(Deg2Rad(pitch));
+	
 }

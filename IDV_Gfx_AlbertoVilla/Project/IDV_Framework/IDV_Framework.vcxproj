@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="camera.cpp" />
     <ClCompile Include="src\IDVScene\IDVD3DMesh.cpp" />
     <ClCompile Include="src\IDVScene\IDVD3DQuad.cpp" />
     <ClCompile Include="src\IDVScene\IDVGLMesh.cpp" />
@@ -27,6 +26,7 @@
     <ClCompile Include="src\IDVScene\IDVPrimitiveInstance.cpp" />
     <ClCompile Include="src\IDVScene\IDVPrimitiveManager.cpp" />
     <ClCompile Include="src\IDVScene\IDVSceneProp.cpp" />
+    <ClCompile Include="src\IDVUtils\camera.cpp" />
     <ClCompile Include="src\IDVUtils\IDVUtils.cpp" />
     <ClCompile Include="src\IDVUtils\InputManager.cpp" />
     <ClCompile Include="src\IDVUtils\Timer.cpp" />

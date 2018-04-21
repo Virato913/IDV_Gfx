@@ -1,220 +1,285 @@
-#include <IDVParser.h>
 #include <stdio.h>
-#include <iostream>
-#include <fstream>
+#include <IDVParser.h>
 #include <string>
 #include <vector>
-#include <conio.h>
+#include <fstream>
+#include <iostream>
 #include <iomanip>
-
-
-
 
 Parser::Parser()
 {
+	ftest = 0;
+	size = 0;
+
+	meshCount = 0;
 }
 
-void Parser::CargarVertices()
+bool Parser::Load(std::string fileName)
 {
-	std::fstream vertexFile;
-	std::vector<Vertex>::iterator vertexIterator;
-	std::string fileName, word, textureName;
+	std::vector<vertex>::iterator itVert;
+	std::vector<uv>::iterator itUV;
+	std::vector<normals>::iterator itNormals;
+	std::vector<decldata>::iterator itTangentials;
+	std::vector<decldata>::iterator itBinormals;
 
-	char ans;
-	do
+	std::ifstream fileStream;
+	fileStream.open(fileName);
+
+	if (!fileStream.is_open())
 	{
-		std::cout << "Por favor introduzca el nombre del archivo. \n";
-		getline(std::cin, fileName);
-		std::string path = "Models/";
-
-		vertexFile.open(path + fileName + ".X", std::ios_base::in, std::ios::binary);
-
-		if (vertexFile.is_open())
+		std::cout << "couldnt find " << fileName << "in specified directory" << std::endl;
+		return false;
+	}
+	fileStream.seekg(0, fileStream.beg);
+	while (!fileStream.eof())
+	{
+		fileStream >> a;
+		if (a == "Mesh")
 		{
-			ans = 'l';
-
-			while (getline(vertexFile, word) && !vertexFile.eof())
+			fileStream >> a;
+			b = a.substr(0, 5);
+			if (b == "mesh_")
 			{
-				if (!word.find(" Mesh mesh_"))
-				{
-					meshCount++;
-				}
+				meshCount++;
 			}
-			vertexFile.clear();
-			vertexFile.seekg(0, vertexFile.beg);
 
-			for (int meshNum = 0; meshNum < meshCount; meshNum++)
+		}
+	}
+	fileStream.seekg(0, fileStream.beg);
+
+	for (int i = 0; i < meshCount; i++)
+	{
+		std::vector<uv> uvbuffer;
+		std::vector<vertex> vertexbuffer;
+		mesh actual;
+		while (true)
+		{
+			fileStream >> a;
+			if (a == "Mesh")
 			{
-				std::vector<Vertex> tempVec;
-				std::vector<unsigned short> indexCoordinates;
-				Mesh mesh;
-				int txts = 0;
-				mesh.totalVertex = 0;
-				mesh.totalIndexes = 0;
-				bool  done = false;
-				while (getline(vertexFile, word) && !done)
+				fileStream >> a;
+				b = a.substr(0, 5);
+				if (b == "mesh_")
 				{
-					if (!word.find(" Mesh mesh_"))
-					{
-						vertexFile >> mesh.totalVertex;
-						vertexFile >> ans;
-						for (int i = 0; i < mesh.totalVertex; i++)
-						{
-							Vertex vertxCoordinates;
-							vertexFile >> vertxCoordinates.x;
-							vertexFile >> ans;
-							vertexFile >> vertxCoordinates.y;
-							vertexFile >> ans;
-							vertexFile >> vertxCoordinates.z;
-							vertexFile >> ans;
-							vertexFile >> ans;
-
-							tempVec.push_back(vertxCoordinates);
-						}
-						vertexFile >> mesh.totalIndexes;
-						vertexFile >> ans;
-
-						for (int i = 0; i < mesh.totalIndexes; i++)
-						{
-							unsigned short x, y, z;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							vertexFile >> x;
-							vertexFile >> ans;
-							vertexFile >> y;
-							vertexFile >> ans;
-							vertexFile >> z;
-							vertexFile >> ans;
-							vertexFile >> ans;
-
-							mesh.indexCoordinatesMesh.push_back(x);
-							mesh.indexCoordinatesMesh.push_back(y);
-							mesh.indexCoordinatesMesh.push_back(z);
-						}
-					}
-
-					if (!word.find("  MeshNormals n"))
-					{
-						vertexFile >> mesh.totalVertex;
-						vertexFile >> ans;
-						for (int i = 0; i < mesh.totalVertex; i++)
-						{
-							vertexFile >> tempVec[i].xn;
-							vertexFile >> ans;
-							vertexFile >> tempVec[i].yn;
-							vertexFile >> ans;
-							vertexFile >> tempVec[i].zn;
-							vertexFile >> ans;
-							vertexFile >> ans;
-						}
-					}
-
-					if (!word.find("  MeshTextureCoords t"))
-					{
-						vertexFile >> mesh.totalVertex;
-						vertexFile >> ans;
-						for (int i = 0; i < mesh.totalVertex; i++)
-						{
-							vertexFile >> tempVec[i].u;
-							vertexFile >> ans;
-							vertexFile >> tempVec[i].v;
-							vertexFile >> ans;
-							vertexFile >> ans;
-						}
-					}
-
-					if (!word.find("  DeclData {"))
-					{
-						vertexFile >> mesh.totalMaterials;
-						vertexFile >> ans;
-						mesh.meshMetaInfo.resize(mesh.totalMaterials);
-						for (int i = 0; i < mesh.totalMaterials; i++)
-						{
-							unsigned short matType;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							vertexFile >> matType;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							vertexFile >> ans;
-							mesh.MaterialType.push_back(matType);
-						}
-						vertexFile >> mesh.totalMeta;
-						vertexFile >> ans;
-						mesh.meshMetaInfo.resize(mesh.totalMeta);
-						for (int i = 0; i < mesh.totalVertex; i++)
-						{
-							for (int j = 0; j < mesh.totalMaterials; j++)
-							{
-								MetaObject metaObject;
-								unsigned int x, y, z;
-								vertexFile >> x;
-								vertexFile >> ans;
-								vertexFile >> y;
-								vertexFile >> ans;
-								vertexFile >> z;
-								vertexFile >> ans;
-
-								metaObject.mx = reinterpret_cast<float&>(x);
-								metaObject.my = reinterpret_cast<float&>(y);
-								metaObject.mz = reinterpret_cast<float&>(z);
-
-								mesh.meshMetaInfo[j].submeta.push_back(metaObject);
-							}
-						}
-					}
-
-
-					if (!word.find("  MeshMaterialList"))
-					{
-						vertexFile >> mesh.totalMaterialsInMesh;
-						vertexFile >> ans;
-						vertexFile >> mesh.totalMaterials;
-						vertexFile >> ans;
-
-						mesh.totalMeshMaterials.resize(mesh.totalMaterialsInMesh);
-						int matID = -1;
-						for (int i = 0; i < mesh.totalIndexes; i++)
-						{
-							vertexFile >> matID;
-							vertexFile >> ans;
-
-							mesh.totalMeshMaterials[matID].mtlBuffer.push_back(mesh.indexCoordinatesMesh[(i * 3) + 0]);
-							mesh.totalMeshMaterials[matID].mtlBuffer.push_back(mesh.indexCoordinatesMesh[(i * 3) + 1]);
-							mesh.totalMeshMaterials[matID].mtlBuffer.push_back(mesh.indexCoordinatesMesh[(i * 3) + 2]);
-						}
-					}
-
-					if (!word.find("    TextureFilename Diffuse"))
-					{
-						vertexFile >> quoted(textureName);
-
-
-						mesh.nombresTexturas.push_back(textureName);
-						mesh.totaltext++;
-						txts++;
-					}
-
-					if (txts >= mesh.totalMaterialsInMesh)
-					{
-						done = true;
-					}
+					break;
 				}
 
-				mesh.TotalVertex = tempVec;
-				totalMeshes.push_back(mesh);
 			}
-			vertexFile.close();
 		}
-		else
+		fileStream >> c >> actual.vertexCount >> c;
+		for (unsigned int i = 0; i < actual.vertexCount; i++)
 		{
-			std::cout << "ERROR: No se pudo cargar el archivo. Revise que el nombre del archivo este escrito correctamente, o que el archivo se encuentre en la carpeta del programa.\n\nDesea intentarlo de nuevo?\ny/n" << std::endl;
-			std::cin >> ans;
-			std::cin.ignore();
+			vertex vp;
+			fileStream >> vp.x >> c >> vp.y >> c >> vp.z >> c >> c;
+			vertexbuffer.push_back(vp);
 		}
-		std::cout << "Modelo cargado con exito." << std::endl;
-	} while (ans == 'Y' || ans == 'y');
+		fileStream >> actual.indexCount >> c;
+		for (int i = 0; i < actual.indexCount; i++)
+		{
+			unsigned short v0, v1, v2;
+			fileStream >> c >> c >> v0;
+			fileStream >> c >> v1;
+			fileStream >> c >> v2;
+			fileStream >> c >> c;
+
+			actual.MeshIndex.push_back(v0);
+			actual.MeshIndex.push_back(v1);
+			actual.MeshIndex.push_back(v2);
+		}
+
+		while (true)
+		{
+			fileStream >> a;
+			if (a == "MeshNormals")
+			{
+				fileStream >> a;
+				if (a == "normals")
+				{
+					break;
+				}
+
+			}
+		}
+		fileStream >> c >> actual.normalsCount >> c;
+		for (unsigned int i = 0; i < actual.normalsCount; i++)
+		{
+			normals np;
+			fileStream >> np.nx >> c >> np.ny >> c >> np.nz >> c >> c;
+			actual.MeshNorm.push_back(np);
+		}
+
+		while (true)
+		{
+			fileStream >> a;
+			if (a == "MeshTextureCoords")
+			{
+				fileStream >> a;
+				if (a == "tc0")
+				{
+					break;
+				}
+
+			}
+		}
+		fileStream >> c >> actual.uvCount >> c;
+		for (unsigned int i = 0; i < actual.uvCount; i++)
+		{
+			uv uvp;
+			fileStream >> uvp.u >> c >> uvp.v >> c >> c;
+			uvbuffer.push_back(uvp);
+		}
+		while (true)
+		{
+			fileStream >> a;
+			if (a == "DeclData")
+			{
+				break;
+			}
+		}
+		fileStream >> c >> actual.totalObjects >> c;
+		for (int i = 0; i < actual.totalObjects; i++)
+		{
+			unsigned short type;
+			fileStream >> c >> c >> c >> c >> type >> c >> c >> c >> c;
+			actual.objectTypes.push_back(type);
+		}
+		fileStream >> actual.decldataCount >> c;
+		actual.MeshMeta.resize(actual.decldataCount);
+		for (unsigned int i = 0; i < actual.vertexCount; i++)
+		{
+			for (int j = 0; j < actual.totalObjects; j++)
+			{
+				decldata meta;
+				unsigned int m1, m2, m3;
+				fileStream >> m1 >> c >> m2 >> c >> m3 >> c;
+				float mx = reinterpret_cast<float&>(m1);
+				float my = reinterpret_cast<float&>(m2);
+				float mz = reinterpret_cast<float&>(m3);
+				meta.mx = mx; meta.my = my; meta.mz = mz;
+				actual.MeshMeta[j].decldataset.push_back(meta);
+			}
+		}
+		while (true)
+		{
+			fileStream >> a;
+			if (a == "MeshMaterialList")
+			{
+				fileStream >> a;
+				if (a == "mtls")
+				{
+					break;
+				}
+			}
+		}
+		fileStream >> c >> actual.matInMesh >> c >> actual.totalMaterial >> c;
+		actual.MeshMat.resize(actual.matInMesh);
+		int getMatId = -1;
+		for (int i = 0; i < actual.indexCount; i++)
+		{
+
+			fileStream >> getMatId >> c;
+			actual.MeshMat[getMatId].materialset.push_back(actual.MeshIndex[(i * 3) + 0]);
+			actual.MeshMat[getMatId].materialset.push_back(actual.MeshIndex[(i * 3) + 1]);
+			actual.MeshMat[getMatId].materialset.push_back(actual.MeshIndex[(i * 3) + 2]);
+
+		}
+
+		bool cycle = true;
+		for (unsigned int i = 0; i < actual.matInMesh; i++)
+		{
+			std::string normal;
+			std::string texture;
+			while (cycle)
+			{
+				fileStream >> a;
+				if (a == "EffectParamString")
+				{
+					fileStream >> c >> a;
+					if (a == "\"normalMap\";")
+					{
+						char brake = 92;
+						fileStream >> std::quoted(a);
+						if (a.find_last_of(brake) != std::string::npos)
+						{
+							int last = a.find_last_of(brake);
+							normal = a.substr(last + 1, a.size() - last);
+						}
+						else
+							normal = a;
+					}
+				}
+
+
+				if (a == "TextureFilename")
+				{
+					fileStream >> a;
+					if (a == "Diffuse")
+					{
+						cycle = false;
+					}
+				}
+			}
+			cycle = true;
+			char brake = 92;
+			fileStream >> c >> std::quoted(a);
+			if (a.find_last_of(brake) != std::string::npos)
+			{
+				int last = a.find_last_of(brake);
+				texture = a.substr(last + 1, a.size() - last);
+			}
+			else
+				texture = a;
+			actual.txtbuffer.push_back(texture);
+			actual.nrmFileBuffer.push_back(normal);
+		}
+		for (itVert = vertexbuffer.begin(),
+			itUV = uvbuffer.begin(),
+			itTangentials = actual.MeshMeta[1].decldataset.begin(),
+			itBinormals = actual.MeshMeta[0].decldataset.begin(),
+			itNormals = actual.MeshNorm.begin();
+			itVert != vertexbuffer.end() &&
+			itUV != uvbuffer.end() &&
+			itTangentials != actual.MeshMeta[1].decldataset.end() &&
+			itBinormals != actual.MeshMeta[0].decldataset.end() &&
+			itNormals != actual.MeshNorm.end();
+			itVert++, itUV++, itTangentials++, itBinormals++, itNormals++
+			)
+		{
+			vertex vpc;
+			vpc.x = (*itVert).x;
+			vpc.y = (*itVert).y;
+			vpc.z = (*itVert).z;
+			vpc.w = (*itVert).w;
+			vpc.nx = (*itNormals).nx;
+			vpc.ny = (*itNormals).ny;
+			vpc.nz = (*itNormals).nz;
+			vpc.nw = (*itNormals).nw;
+			vpc.tx = (*itTangentials).mx;
+			vpc.ty = (*itTangentials).my;
+			vpc.tz = (*itTangentials).mz;
+			vpc.bx = (*itBinormals).mx;
+			vpc.by = (*itBinormals).my;
+			vpc.bz = (*itBinormals).mz;
+			vpc.u = (*itUV).u;
+			vpc.v = (*itUV).v;
+			actual.MeshVec.push_back(vpc);
+		}
+
+
+
+		meshesTotal.push_back(actual);
+	}
+
+	fileStream.close();
+
+
+	return true;
+
+
+}
+
+void Parser::Read()
+{
+	
+	
 }

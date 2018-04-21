@@ -23,7 +23,7 @@ public:
 	}
 
 	IDVBaseWindow	*m_pWindow;
-	InputManager inputManager;
+	InputManager	iManager;
 };
 
 class IDVBaseWindow {

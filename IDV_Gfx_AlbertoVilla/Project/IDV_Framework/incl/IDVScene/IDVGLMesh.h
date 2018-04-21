@@ -1,18 +1,13 @@
 #ifndef IDV_MESH_GL_H
 #define IDV_MESH_GL_H
 
-#include <d3dx9math.h>
 
-#include <GL/glew.h>
 #include <IDVMath.h>
-#include <IDVParser.h>
+#include <GL/glew.h>
 
 #include <IDVVideo\IDVBaseDriver.h>
 #include <IDVScene\IDVPrimitive.h>
 #include <IDVParser.h>
-#include <map>
-#include <string>
-
 class GLMesh : public IDVPrimitiveBase {
 public:
 
@@ -25,10 +20,11 @@ public:
 		std::vector <SubsetInfo>    SubSets;
 	};
 
-	GLMesh(){
 	
-	}
-	void Create();
+
+	GLMesh() {}
+	inline void Create() {};
+	void Create(std::string link);
 	void Create(char *) {}
 	void Transform(float *t);
 	void Draw(float *t, float *vp);
@@ -38,11 +34,12 @@ public:
 	unsigned int	VB;
 	unsigned int	IB;
 	XMATRIX44		transform;
-
+	Parser			MeshParser;
 	int			 TexId;
 	Texture		*pTexture;
-	std::map<std::string, Texture*> textureMap;
-	Parser parser;
+	Texture		*pNormal;
+	std::map<std::string, Texture*> textureBuffer;
+	std::map<std::string, Texture*> normalBuffer;
 };
 
 #endif

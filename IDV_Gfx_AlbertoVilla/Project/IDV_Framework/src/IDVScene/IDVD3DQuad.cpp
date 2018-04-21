@@ -107,7 +107,7 @@ void IDVD3DQuad::Draw(float *t, float *vp) {
 	UINT offset = 0;
 	UINT stride = sizeof(Vert);
 
-	D3DXMATRIX VP = vp;
+	XMATRIX44 VP = vp;
 	CnstBuffer.WVP = transform;
 	CnstBuffer.World = transform;
 	CnstBuffer.WorldView = transform;
