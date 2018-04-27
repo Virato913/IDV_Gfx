@@ -1,2 +1,21 @@
 ﻿  IDVWin32Manager.cpp
+  IDVGLTexture.cpp
+  IDVGLShader.cpp
+  IDVGLDriver.cpp
+  IDVD3DXShader.cpp
+  IDVD3DXDriver.cpp
+  IDVD3DTexture.cpp
+  IDVBaseDriver.cpp
+  Timer.cpp
+  InputManager.cpp
+  IDVUtils.cpp
+  camera.cpp
+  IDVSceneProp.cpp
+  IDVPrimitiveManager.cpp
+  IDVPrimitiveInstance.cpp
+  IDVGLQuad.cpp
+  IDVGLMesh.cpp
+  IDVD3DQuad.cpp
+  IDVD3DMesh.cpp
+  Generating Code...
   IDV_Framework.vcxproj -> C:\Users\Alumno14\Desktop\Weas de Gráficas\Mi proyecto\IDV_Gfx\IDV_Gfx_AlbertoVilla\Project\Lib\Debug\Win32\IDV_Framework.lib

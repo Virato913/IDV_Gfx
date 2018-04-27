@@ -23,9 +23,30 @@ void IDVTestApplication::CreateAssets() {
 	int index = IDVPrimitiveMgr->CreateMesh(alfa,&sceneProp);
 	Mesh[0].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
 	instancesInScene++;
+
 	alfa = "Models/CerdoNuevo.X ";
 	index = IDVPrimitiveMgr->CreateMesh(alfa,&sceneProp);
 	Mesh[1].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
+	instancesInScene++;
+
+	alfa = "Models/NuCroc.X ";
+	index = IDVPrimitiveMgr->CreateMesh(alfa, &sceneProp);
+	Mesh[2].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
+	instancesInScene++;
+
+	alfa = "Models/NuBatman.X ";
+	index = IDVPrimitiveMgr->CreateMesh(alfa, &sceneProp);
+	Mesh[3].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
+	instancesInScene++;
+
+	alfa = "Models/NuVenomJok.X ";
+	index = IDVPrimitiveMgr->CreateMesh(alfa, &sceneProp);
+	Mesh[4].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
+	instancesInScene++;
+
+	alfa = "Models/Cube.X ";
+	index = IDVPrimitiveMgr->CreateMesh(alfa, &sceneProp);
+	Mesh[5].CreateInstance(IDVPrimitiveMgr->GetPrimitive(index), &activeCamera->VP);
 	instancesInScene++;
 	IDVPrimitiveMgr->SetSceneProps(&sceneProp);
 }
@@ -39,13 +60,30 @@ void IDVTestApplication::OnUpdate() {
 	TimeManager.Update();
 	deltaTime = TimeManager.GetDTSecs();
 	OnInput();
-
+	Mesh[1].Position.m42 = 5.0f;
 	Mesh[1].ScaleAbsolute(4.0f);
 	Mesh[1].RotateXAbsolute(0.0f);
 	Mesh[1].RotateZAbsolute(90.0f);
 	Mesh[1].RotateYAbsolute(90.0f);
 	Mesh[1].Update();
+	Mesh[2].Position.m41 = 50.0f;
+	Mesh[2].ScaleAbsolute(.5f);
+	Mesh[2].Update();
+	Mesh[3].Position.m41 = 100.0f;
+	Mesh[3].ScaleAbsolute(.5f);
+	Mesh[3].Update();
+	Mesh[4].Position.m41 = 150.0f;
+	Mesh[4].ScaleAbsolute(.5f);
+	Mesh[4].Update();
+
 	activeCamera->Update(deltaTime);
+	Mesh[5].ScaleAbsolute(1.0f);
+	Mesh[5].Position.m41 = Light->Position.x;
+	Mesh[5].Position.m42 = Light->Position.y;
+	Mesh[5].Position.m43 = Light->Position.z;
+
+	Mesh[5].Update();
+
 	OnDraw();
 }
 
